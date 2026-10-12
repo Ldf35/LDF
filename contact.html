@@ -1,1 +1,599 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Contact LDF | Life Development Foundation</title><meta name="description" content="Choose the subject that best matches your enquiry. This static form opens an email draft; it does not store submissions or send them to a database."><meta name="theme-color" content="#002B7F"><link rel="icon" href="assets/ldf-mark.svg" type="assets/svg+xml"><link rel="stylesheet" href="css/style.css"><script defer src="js/config.js"></script><script defer src="js/main.js"></script></head><body><div id="site-header"></div><main><section class="page-hero"><div class="container"><p class="eyebrow">LIFE DEVELOPMENT FOUNDATION</p><h1>Start a conversation</h1><p class="lead">Choose the subject that best matches your enquiry. This static form opens an email draft; it does not store submissions or send them to a database.</p></div></section><section class="section"><div class="container"><section class="content-section"><div class="contact-layout"><div class="card"><h2>Contact details</h2><p><strong>Email</strong><br><a class="text-link" data-email href="#">lifedevelopmentfoundation.uk@gmail.com</a></p><p>For privacy and safety, do not include sensitive personal, medical or beneficiary information in a general enquiry.</p><h3>Helpful links</h3><ul class="link-list"><li><a href="hope.html">HOPE Project</a></li><li><a href="learning.html">Learning Hub</a></li><li><a href="get-involved.html">Get involved</a></li></ul></div><form class="contact-form" id="contact-form"><label for="name">Your name</label><input id="name" name="name" autocomplete="name" required maxlength="100"><label for="email">Your email</label><input id="email" name="email" type="email" autocomplete="email" required maxlength="200"><label for="topic">Enquiry type</label><select id="topic" name="topic"><option value="general">General enquiry</option><option value="hope">HOPE Project</option><option value="learning">Learning Hub</option><option value="volunteer">Volunteering</option><option value="careers">Careers</option><option value="partners">Partnership</option><option value="shop-partner">HOPE shop partner</option><option value="reports">Reports and impact</option><option value="idea">Share an idea</option></select><label for="message">Message</label><textarea id="message" name="message" rows="6" required maxlength="4000"></textarea><label class="consent"><input type="checkbox" required> I understand this opens my email application and that I should not include sensitive personal information.</label><button class="button button-primary" type="submit">Prepare email</button><p class="form-message" id="form-message" role="status"></p></form></div></section></div></section></main><div id="site-footer"></div></body></html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Contact LDF | Life Development Foundation</title>
+
+  <meta
+    name="description"
+    content="Contact Life Development Foundation about HOPE, learning, volunteering, partnerships and community development."
+  >
+
+  <meta name="theme-color" content="#002B7F">
+
+  <link rel="icon" href="assets/ldf-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .contact-intro {
+      max-width: 720px;
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    .contact-card,
+    .contact-form-card {
+      background: #fff;
+      border: 1px solid #e0e7f1;
+      border-radius: 18px;
+      padding: 26px;
+      box-shadow: 0 8px 28px rgba(0, 43, 127, 0.06);
+    }
+
+    .contact-card h2,
+    .contact-form-card h2 {
+      margin-top: 0;
+    }
+
+    .contact-method {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 16px 0;
+      border-bottom: 1px solid #e8edf5;
+    }
+
+    .contact-method:last-of-type {
+      border-bottom: 0;
+    }
+
+    .contact-icon {
+      flex: 0 0 44px;
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: #edf2ff;
+      color: #002B7F;
+    }
+
+    .contact-icon svg {
+      width: 23px;
+      height: 23px;
+    }
+
+    .contact-method h3 {
+      margin: 0 0 5px;
+      font-size: 1rem;
+    }
+
+    .contact-method p {
+      margin: 0;
+      overflow-wrap: anywhere;
+      line-height: 1.6;
+    }
+
+    .contact-method a {
+      color: #002B7F;
+      font-weight: 600;
+    }
+
+    .whatsapp-link {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 18px;
+      padding: 14px 18px;
+      background: #eaf8ef;
+      border: 1px solid #b9e6c8;
+      border-radius: 12px;
+      color: #176b37;
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .whatsapp-link:hover {
+      background: #d9f3e2;
+      transform: translateY(-2px);
+    }
+
+    .whatsapp-link svg {
+      width: 23px;
+      height: 23px;
+      flex-shrink: 0;
+    }
+
+    .social-section {
+      margin-top: 26px;
+    }
+
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .social-link {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #dce4f1;
+      border-radius: 13px;
+      background: #fff;
+      color: #002B7F;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .social-link:hover {
+      transform: translateY(-3px);
+      background: #edf2ff;
+    }
+
+    .social-link svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .contact-note {
+      margin-top: 22px;
+      padding: 15px;
+      border-radius: 12px;
+      background: #f3f6fc;
+      color: #394963;
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+
+    .contact-form {
+      display: grid;
+      gap: 10px;
+    }
+
+    .contact-form label {
+      margin-top: 8px;
+      font-weight: 600;
+      color: #172033;
+    }
+
+    .contact-form input:not([type="checkbox"]),
+    .contact-form select,
+    .contact-form textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 13px 14px;
+      border: 1px solid #ccd5e5;
+      border-radius: 10px;
+      background: #fff;
+      color: #172033;
+      font: inherit;
+    }
+
+    .contact-form textarea {
+      resize: vertical;
+      min-height: 150px;
+    }
+
+    .contact-form input:focus-visible,
+    .contact-form select:focus-visible,
+    .contact-form textarea:focus-visible,
+    .contact-form button:focus-visible,
+    .social-link:focus-visible,
+    .whatsapp-link:focus-visible {
+      outline: 3px solid #7da7ff;
+      outline-offset: 3px;
+    }
+
+    .consent {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      font-weight: 400 !important;
+    }
+
+    .consent input {
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    .contact-form button {
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .form-message {
+      min-height: 1.5em;
+      margin-bottom: 0;
+      line-height: 1.6;
+    }
+
+    .contact-bottom {
+      margin-top: 30px;
+      padding: 28px;
+      border-radius: 18px;
+      background: #002B7F;
+      color: #fff;
+    }
+
+    .contact-bottom h2 {
+      margin-top: 0;
+      color: #fff;
+    }
+
+    .contact-bottom p {
+      line-height: 1.7;
+    }
+
+    .contact-bottom a {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    @media (max-width: 760px) {
+      .contact-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-card,
+      .contact-form-card {
+        padding: 21px;
+      }
+
+      .contact-bottom {
+        padding: 22px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .social-link,
+      .whatsapp-link {
+        transition: none;
+      }
+    }
+  </style>
+
+  <script defer src="js/config.js"></script>
+  <script defer src="js/main.js"></script>
+</head>
+
+<body>
+
+  <div id="site-header"></div>
+
+  <main>
+
+    <!-- PAGE INTRODUCTION -->
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">LIFE DEVELOPMENT FOUNDATION</p>
+
+        <h1>Let's Start a Conversation</h1>
+
+        <p class="lead contact-intro">
+          Have a question, an idea or a way you would like to contribute?
+          We welcome enquiries from individuals, volunteers, organisations
+          and potential partners.
+        </p>
+      </div>
+    </section>
+
+
+    <!-- CONTACT DETAILS AND ENQUIRY FORM -->
+    <section class="section">
+      <div class="container">
+
+        <div class="contact-layout">
+
+          <!-- CONTACT INFORMATION -->
+          <section class="contact-card" aria-labelledby="contact-details-title">
+
+            <h2 id="contact-details-title">Get in Touch</h2>
+
+            <p>
+              Choose the contact method that works best for you.
+              For general enquiries, email is a good place to start.
+            </p>
+
+            <div class="contact-method">
+              <div class="contact-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="5" width="18" height="14" rx="2"/>
+                  <path d="m3 7 9 6 9-6"/>
+                </svg>
+              </div>
+
+              <div>
+                <h3>Email LDF</h3>
+                <p>
+                  <a href="mailto:lifedevelopmentfoundation.uk@gmail.com">
+                    lifedevelopmentfoundation.uk@gmail.com
+                  </a>
+                </p>
+              </div>
+            </div>
+
+            <div class="contact-method">
+              <div class="contact-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="9"/>
+                  <path d="M8 12h8M12 8v8"/>
+                </svg>
+              </div>
+
+              <div>
+                <h3>Programme Enquiries</h3>
+                <p>
+                  Ask about the HOPE initiative, the Learning Hub,
+                  volunteering or partnership opportunities.
+                </p>
+              </div>
+            </div>
+
+            <!-- WHATSAPP: REPLACE THE PLACEHOLDER NUMBER -->
+            <a
+              class="whatsapp-link"
+              href="https://wa.me/REPLACE_WITH_LDF_NUMBER"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Contact LDF on WhatsApp"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20.52 3.48A11.8 11.8 0 0 0 12.12 0C5.58 0 .26 5.32.26 11.86c0 2.09.55 4.13 1.6 5.93L.16 24l6.37-1.67a11.86 11.86 0 0 0 5.59 1.42h.01c6.54 0 11.86-5.32 11.86-11.86 0-3.17-1.23-6.15-3.47-8.41ZM12.13 21.7a9.84 9.84 0 0 1-5.02-1.38l-.36-.21-3.78.99 1.01-3.68-.23-.38a9.79 9.79 0 0 1-1.51-5.18c0-5.45 4.44-9.89 9.89-9.89a9.8 9.8 0 0 1 6.99 2.9 9.8 9.8 0 0 1 2.9 6.99c0 5.45-4.44 9.89-9.89 9.89Zm5.42-7.4c-.3-.15-1.77-.87-2.05-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.47-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.2 5.08 4.49.71.31 1.27.5 1.7.64.71.23 1.36.2 1.87.12.57-.08 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35Z"/>
+              </svg>
+              Message LDF on WhatsApp
+            </a>
+
+            <!-- SOCIAL MEDIA: REPLACE PLACEHOLDER URLS -->
+            <div class="social-section">
+              <h3>Connect with LDF</h3>
+
+              <p>
+                Follow our official channels for organisational news,
+                learning opportunities and programme updates.
+              </p>
+
+              <div class="social-links">
+
+                <a
+                  class="social-link"
+                  href="https://www.facebook.com/REPLACE_WITH_LDF_PAGE"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LDF on Facebook"
+                  title="Facebook"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M13.5 21v-8.2h2.76l.41-3.2H13.5V7.56c0-.93.26-1.56 1.6-1.56h1.7V3.14A22.5 22.5 0 0 0 14.32 3c-2.46 0-4.15 1.5-4.15 4.25V9.6H7.4v3.2h2.77V21h3.33Z"/>
+                  </svg>
+                </a>
+
+                <a
+                  class="social-link"
+                  href="https://www.instagram.com/REPLACE_WITH_LDF_PAGE/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LDF on Instagram"
+                  title="Instagram"
+                >
+                  <svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.8"
+                    aria-hidden="true">
+                    <rect x="3" y="3" width="18" height="18" rx="5"/>
+                    <circle cx="12" cy="12" r="4"/>
+                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                  </svg>
+                </a>
+
+                <a
+                  class="social-link"
+                  href="https://www.youtube.com/@REPLACE_WITH_LDF_CHANNEL"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LDF on YouTube"
+                  title="YouTube"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/>
+                  </svg>
+                </a>
+
+                <a
+                  class="social-link"
+                  href="https://www.linkedin.com/company/REPLACE_WITH_LDF_PAGE/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LDF on LinkedIn"
+                  title="LinkedIn"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M5.2 3a2.2 2.2 0 1 0 0 4.4 2.2 2.2 0 0 0 0-4.4ZM3.3 9h3.8v12H3.3V9Zm6.2 0h3.6v1.64h.05A3.95 3.95 0 0 1 16.7 8.7c3.85 0 4.56 2.53 4.56 5.82V21h-3.76v-5.75c0-1.37-.03-3.13-1.91-3.13-1.92 0-2.21 1.5-2.21 3.03V21H9.5V9Z"/>
+                  </svg>
+                </a>
+
+              </div>
+            </div>
+
+            <div class="contact-note">
+              <strong>Your privacy matters.</strong>
+              Please do not send passwords, financial account details,
+              medical records or sensitive information about children
+              and families through general enquiries or social media.
+            </div>
+
+          </section>
+
+
+          <!-- EMAIL ENQUIRY FORM -->
+          <section class="contact-form-card" aria-labelledby="contact-form-title">
+
+            <h2 id="contact-form-title">Send an Enquiry</h2>
+
+            <p>
+              Complete the form below to prepare an email using your
+              device's email application. Your message is not saved
+              to an LDF database by this form.
+            </p>
+
+            <form class="contact-form" id="contact-form">
+
+              <label for="name">Your name</label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                autocomplete="name"
+                maxlength="100"
+                required
+              >
+
+              <label for="email">Your email address</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                maxlength="200"
+                required
+              >
+
+              <label for="topic">What is your enquiry about?</label>
+              <select id="topic" name="topic" required>
+                <option value="General enquiry">General enquiry</option>
+                <option value="HOPE Project">HOPE Project</option>
+                <option value="Learning Hub">Learning Hub</option>
+                <option value="Volunteering">Volunteering</option>
+                <option value="Careers">Careers</option>
+                <option value="Partnership">Partnership</option>
+                <option value="HOPE shop partner">HOPE shop partner</option>
+                <option value="Reports and impact">Reports and impact</option>
+                <option value="Share an idea">Share an idea</option>
+              </select>
+
+              <label for="message">Your message</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="6"
+                maxlength="4000"
+                required
+                placeholder="How can we help?"
+              ></textarea>
+
+              <label class="consent" for="email-consent">
+                <input
+                  id="email-consent"
+                  name="consent"
+                  type="checkbox"
+                  required
+                >
+                <span>
+                  I understand that this form opens an email draft in
+                  my email application. I will avoid including sensitive
+                  personal information.
+                </span>
+              </label>
+
+              <button class="button button-primary" type="submit">
+                Prepare Email
+              </button>
+
+              <p
+                class="form-message"
+                id="form-message"
+                role="status"
+                aria-live="polite"
+              ></p>
+
+            </form>
+
+          </section>
+
+        </div>
+
+
+        <!-- CLOSING MESSAGE -->
+        <section class="contact-bottom">
+          <h2>Every positive change starts with a conversation.</h2>
+
+          <p>
+            Whether you want to learn, volunteer, share an idea or explore
+            a responsible partnership, we welcome your interest in building
+            stronger lives and thriving communities.
+          </p>
+
+          <a href="our-work.html">Explore our work →</a>
+        </section>
+
+      </div>
+    </section>
+
+  </main>
+
+  <div id="site-footer"></div>
+
+
+  <!-- Contact form: prepares an email draft, does not send or store it -->
+  <script>
+    (function () {
+      const form = document.getElementById("contact-form");
+      const status = document.getElementById("form-message");
+
+      if (!form || !status) return;
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        if (!form.reportValidity()) return;
+
+        const data = new FormData(form);
+        const name = String(data.get("name") || "").trim();
+        const email = String(data.get("email") || "").trim();
+        const topic = String(data.get("topic") || "General enquiry").trim();
+        const message = String(data.get("message") || "").trim();
+
+        const subject = "LDF Enquiry: " + topic;
+
+        const body = [
+          "Name: " + name,
+          "Reply email: " + email,
+          "Enquiry type: " + topic,
+          "",
+          "Message:",
+          message
+        ].join("\n");
+
+        const mailto =
+          "mailto:lifedevelopmentfoundation.uk@gmail.com" +
+          "?subject=" + encodeURIComponent(subject) +
+          "&body=" + encodeURIComponent(body);
+
+        status.textContent =
+          "Opening your email application. Please review the draft and press Send there.";
+
+        window.location.href = mailto;
+      });
+    })();
+  </script>
+
+</body>
+</html>
