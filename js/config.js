@@ -4,7 +4,8 @@
 window.LDF_CONFIG = {
   siteName: 'Life Development Foundation',
   contactEmail: 'lifedevelopmentfoundation.uk@gmail.com',
-  apps: {
+  window.LDF_CONFIG = {
+     apps: {
     hope: 'https://script.google.com/macros/s/AKfycbyXmnYe5RiG8bFVPamU2XUTQ7HWYsAjoyaZg_XvslBXCzIAtwJJ6gKxId8X5cZ6cg8u/exec',
     learning: '', // Add the verified Learning Hub deployment URL.
     ai: 'https://ldf-ai-gateway.lifedevelopmentfoundation-docs.workers.dev/',
