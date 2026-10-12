@@ -12,6 +12,292 @@
   <li>Collaboration and community participation</li>
   <li>Privacy, safety and fairness</li></ul></section></div>
 </section>
+  
+<!-- LDF TEAM DIRECTORY -->
+<section class="section" id="ldf-team">
+  <div class="container">
+    <p class="eyebrow">THE PEOPLE BEHIND LDF</p>
+    <h2>Our team</h2>
+    <p>Meet the people who contribute their time, skills and experience to our mission.</p>
+
+    <div class="ldf-filters">
+      <label for="team-role">Filter by role</label>
+      <select id="team-role">
+        <option value="all">All roles</option>
+        <option value="leadership">Leadership</option>
+        <option value="staff">Staff</option>
+        <option value="volunteer">Volunteers</option>
+        <option value="advisor">Advisers</option>
+      </select>
+    </div>
+
+    <div class="ldf-team-grid" id="team-grid">
+      <article class="ldf-team-card" data-role="leadership">
+        <div class="ldf-avatar">LDF</div>
+        <h3>Leadership team</h3>
+        <p>Guiding the foundation's mission, strategy and accountability.</p>
+        <span>Leadership</span>
+      </article>
+      <article class="ldf-team-card" data-role="staff">
+        <div class="ldf-avatar">LDF</div>
+        <h3>Programme team</h3>
+        <p>Supporting programme coordination and community development.</p>
+        <span>Staff</span>
+      </article>
+      <article class="ldf-team-card" data-role="volunteer">
+        <div class="ldf-avatar">LDF</div>
+        <h3>Volunteer network</h3>
+        <p>Contributing skills and time to approved LDF activities.</p>
+        <span>Volunteers</span>
+      </article>
+      <article class="ldf-team-card" data-role="advisor">
+        <div class="ldf-avatar">LDF</div>
+        <h3>Advisers and partners</h3>
+        <p>Sharing relevant knowledge and professional guidance.</p>
+        <span>Advisers</span>
+      </article>
+    </div>
+    <p class="ldf-note">Individual profiles can be added after names, roles and publication consent are verified.</p>
+  </div>
+</section>
+
+<!-- LDF PROGRAMME MAP -->
+<section class="section section-tint" id="ldf-reach">
+  <div class="container">
+    <p class="eyebrow">OUR COMMUNITY REACH</p>
+    <h2>Explore our work by location</h2>
+    <p>Filter programme records by district, programme and activity status.</p>
+
+    <div class="ldf-map-filters">
+      <label>
+        District
+        <select id="map-district">
+          <option value="all">All locations</option>
+          <option value="Ratnapura">Ratnapura</option>
+          <option value="Matara">Matara</option>
+          <option value="Online">Online</option>
+        </select>
+      </label>
+      <label>
+        Programme
+        <select id="map-programme">
+          <option value="all">All programmes</option>
+          <option value="education">Education</option>
+          <option value="prevention">Drug prevention</option>
+          <option value="workshop">Workshops</option>
+        </select>
+      </label>
+      <label>
+        Status
+        <select id="map-status">
+          <option value="all">All statuses</option>
+          <option value="past">Past activity</option>
+          <option value="planned">Planned</option>
+          <option value="active">Active</option>
+        </select>
+      </label>
+    </div>
+
+    <div id="ldf-map" style="height:390px;border-radius:16px;overflow:hidden;background:#e8eef7"></div>
+    <p id="map-count" aria-live="polite"></p>
+    <div id="map-results" class="ldf-map-results"></div>
+    <p class="ldf-note">Map pins are approximate area markers, not exact project or beneficiary addresses. Planned and active records must be added only when verified.</p>
+  </div>
+</section>
+
+<style>
+.ldf-filters,.ldf-map-filters {
+  display:flex; flex-wrap:wrap; gap:16px; margin:24px 0;
+}
+.ldf-filters label,.ldf-map-filters label {
+  display:flex; flex-direction:column; gap:7px;
+  font-weight:600; color:#172033;
+}
+.ldf-filters select,.ldf-map-filters select {
+  min-width:180px; max-width:100%; padding:12px;
+  border:1px solid #ccd5e5; border-radius:9px;
+  background:#fff; color:#172033; font:inherit;
+}
+.ldf-team-grid {
+  display:grid; grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:18px; margin-top:22px;
+}
+.ldf-team-card {
+  background:#fff; border:1px solid #e0e7f1;
+  border-radius:14px; padding:22px;
+}
+.ldf-team-card h3 { margin:14px 0 8px; }
+.ldf-team-card p { line-height:1.65; }
+.ldf-team-card span {
+  display:inline-block; background:#eaf0ff; color:#002B7F;
+  padding:5px 10px; border-radius:20px; font-size:13px;
+}
+.ldf-avatar {
+  width:54px; height:54px; border-radius:50%;
+  display:grid; place-items:center; background:#002B7F;
+  color:#fff; font-weight:700;
+}
+.ldf-map-results {
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px; margin-top:20px;
+}
+.ldf-map-result {
+  background:#fff; border:1px solid #e0e7f1;
+  border-radius:12px; padding:18px;
+}
+.ldf-map-result h3 { margin-top:0; }
+.ldf-note { color:#526078; font-size:14px; line-height:1.6; }
+@media(max-width:760px) {
+  .ldf-team-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .ldf-map-results { grid-template-columns:1fr; }
+}
+@media(max-width:420px) {
+  .ldf-team-grid { grid-template-columns:1fr; }
+  .ldf-filters select,.ldf-map-filters select { min-width:0; width:100%; }
+}
+</style>
+
+<!-- Free map library -->
+<link rel="stylesheet"
+ href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+(function () {
+  const records = [
+    {
+      title: "Anandagiri Dhamma School",
+      district: "Matara", area: "Weligama",
+      programme: "education", status: "past",
+      lat: 5.973, lng: 80.429,
+      description: "Previously reported educational activity involving children."
+    },
+    {
+      title: "Sri Bosath Dhamma School",
+      district: "Ratnapura", area: "Ratnapura",
+      programme: "prevention", status: "past",
+      lat: 6.682, lng: 80.399,
+      description: "Previously reported educational and drug-awareness activity."
+    },
+    {
+      title: "Thakshila / Weherahena",
+      district: "Matara", area: "Weherahena",
+      programme: "education", status: "past",
+      lat: 5.948, lng: 80.542,
+      description: "Previously reported activity involving parents and children."
+    },
+    {
+      title: "Dikwella drug prevention",
+      district: "Matara", area: "Dikwella",
+      programme: "prevention", status: "past",
+      lat: 5.966, lng: 80.685,
+      description: "Previously reported drug-prevention activity."
+    },
+    {
+      title: "Online LDF workshops",
+      district: "Online", area: "Online",
+      programme: "workshop", status: "past",
+      lat: 7.873, lng: 80.771,
+      description: "Online workshops, including Dalulana Sithuwili and Shaping Your Life. The map position is illustrative only."
+    }
+  ];
+
+  const $ = id => document.getElementById(id);
+  const district = $("map-district");
+  const programme = $("map-programme");
+  const status = $("map-status");
+  const results = $("map-results");
+  const count = $("map-count");
+
+  $("team-role").addEventListener("change", function () {
+    document.querySelectorAll(".ldf-team-card").forEach(card => {
+      card.hidden = this.value !== "all" &&
+                    card.dataset.role !== this.value;
+    });
+  });
+
+  let map;
+  let markers;
+
+  function render() {
+    const filtered = records.filter(r =>
+      (district.value === "all" || r.district === district.value) &&
+      (programme.value === "all" || r.programme === programme.value) &&
+      (status.value === "all" || r.status === status.value)
+    );
+
+    count.textContent = filtered.length +
+      (filtered.length === 1 ? " record found" : " records found");
+
+    results.replaceChildren();
+
+    filtered.forEach(r => {
+      const card = document.createElement("article");
+      card.className = "ldf-map-result";
+
+      const title = document.createElement("h3");
+      title.textContent = r.title;
+
+      const location = document.createElement("p");
+      location.textContent = r.area + " · " + r.district;
+
+      const detail = document.createElement("p");
+      detail.textContent = r.description;
+
+      const label = document.createElement("p");
+      label.textContent = "Status: " +
+        (r.status === "past" ? "Past activity" :
+         r.status === "planned" ? "Planned" : "Active");
+
+      card.append(title, location, detail, label);
+      results.appendChild(card);
+    });
+
+    if (map && markers) {
+      markers.clearLayers();
+
+      filtered.filter(r => r.district !== "Online").forEach(r => {
+        L.marker([r.lat, r.lng])
+          .bindPopup(
+            "<strong>" + r.title.replace(/&/g, "&amp;")
+              .replace(/</g, "&lt;") + "</strong><br>" +
+            r.area + " — approximate location"
+          )
+          .addTo(markers);
+      });
+
+      if (markers.getLayers().length) {
+        map.fitBounds(markers.getBounds().pad(0.15), {
+          maxZoom: 10
+        });
+      } else {
+        map.setView([7.873, 80.771], 7);
+      }
+    }
+  }
+
+  [district, programme, status].forEach(el =>
+    el.addEventListener("change", render)
+  );
+
+  if (window.L && $("ldf-map")) {
+    map = L.map("ldf-map").setView([7.873, 80.771], 7);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; OpenStreetMap contributors',
+      maxZoom: 18
+    }).addTo(map);
+
+    markers = L.featureGroup().addTo(map);
+    render();
+  } else {
+    $("ldf-map").textContent =
+      "The map could not load. Check your internet connection.";
+    render();
+  }
+})();
+</script>
+
 </main>
   <div id="site-footer"></div>
 </body></html>
