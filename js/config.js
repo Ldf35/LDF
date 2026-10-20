@@ -1,10 +1,20 @@
+// LDF website settings. The website is the public front door; the LDF app does the real work (giving, learning, tutoring, volunteering).
 window.LDF_CONFIG = {
-siteName: “Life Development Foundation”,
-contactEmail: “lifedevelopmentfoundation.uk@gmail.com”,
-apps: {
-hope: “https://script.google.com/macros/s/AKfycbyXmnYe5RiG8bFVPamU2XUTQ7HWYsAjoyaZg_XvslBXCzIAtwJJ6gKxId8X5cZ6cg8u/exec”,
-learning: “https://script.google.com/macros/s/AKfycbx-vrgaWLOo-xL0wzAX2U9S74vkLfo4qtTp3AOSUFLOiZvq3OBhC6vv1QY1PCQi7247Sw/exec”,
-ai: “https://ldf-ai-gateway.lifedevelopmentfoundation-docs.workers.dev/”,
-admin: “”
-}
+  siteName: 'Life Development Foundation',
+  // fallback only: the live e-mail comes from the app (Admin Station → Automation & settings → Website & contact)
+  contactEmail: 'lifedevelopmentfoundation.docs@gmail.com',
+  appUrl: 'https://ldf-platform.vercel.app/',
+  // The publishable key is public by design; the database security rules decide what visitors can read or send.
+  api: {
+    url: 'https://ftistdcvoojfsnjibkxs.supabase.co',
+    key: 'sb_publishable_r8SfB_qzK6ShMgg5-TSicg_fk-jZLEI'
+  },
+  apps: {
+    hope: 'https://ldf-platform.vercel.app/#/give',
+    learning: 'https://ldf-platform.vercel.app/#/learn',
+    ai: 'https://ldf-platform.vercel.app/#/learn',
+    join: 'https://ldf-platform.vercel.app/#/join',
+    login: 'https://ldf-platform.vercel.app/#/login',
+    tutors: 'https://ldf-platform.vercel.app/#/tutors'
+  }
 };

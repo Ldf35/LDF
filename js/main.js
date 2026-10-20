@@ -10,6 +10,7 @@
     ['index.html', 'Home'],
     ['about.html', 'About'],
     ['our-work.html', 'Our Work'],
+    ['projects.html', 'Projects'],
     ['hope.html', 'HOPE'],
     ['learning.html', 'Learning Hub'],
     ['impact.html', 'Impact'],
@@ -18,21 +19,7 @@
     ['contact.html', 'Contact']
   ];
 
-  // LDF application links
-  const adminLinks = [
-    {
-      label: 'LDF Command Centre',
-      url: 'https://script.google.com/macros/s/AKfycbznYDpg7g5EPeShKGuFAKV_8EJ35Ma65Ifsg0Osiol0F_CIIbp8xQDYzW3KI5in13BW/exec'
-    },
-    {
-      label: 'HOPE Project',
-      url: 'https://script.google.com/macros/s/AKfycbyXmnYe5Ri8G8bFVPamU2XUTQ7HWYsAjoyaZg_XvslBXCzIAtwJJ6gKxId8X5cZ6cg8u/exec'
-    },
-    {
-      label: 'Learning Hub',
-      url: 'https://ldf35.github.io/ldf-hub/#/login'
-    }
-  ];
+  const APP = config.appUrl || 'https://ldf-platform.vercel.app/';
 
   const link = (href, label, cls = '') =>
     `<a class="${cls}" href="${href}"${
@@ -81,34 +68,8 @@
           >
             ${nav.map(([href, label]) => link(href, label)).join('')}
 
-            <a class="nav-cta" href="get-involved.html">
-              Get involved
-            </a>
-
-            <div class="admin-menu">
-              <button
-                class="admin-toggle"
-                type="button"
-                aria-expanded="false"
-                aria-controls="admin-dropdown"
-              >
-                Admin <span aria-hidden="true">▾</span>
-              </button>
-
-              <div
-                class="admin-dropdown"
-                id="admin-dropdown"
-                hidden
-              >
-                ${adminLinks.map(item => `
-                  <a
-                    href="${item.url}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >${item.label}</a>
-                `).join('')}
-              </div>
-            </div>
+            <a class="nav-signin" href="${APP}#/login" target="_blank" rel="noopener noreferrer">Sign in</a>
+            <a class="nav-cta" href="${APP}" target="_blank" rel="noopener noreferrer">Open the app</a>
           </nav>
 
         </div>
@@ -117,10 +78,6 @@
 
     const toggle = header.querySelector('.menu-toggle');
     const menu = header.querySelector('.primary-nav');
-    const adminToggle = header.querySelector('.admin-toggle');
-    const adminMenu = header.querySelector('.admin-menu');
-    const adminDropdown = header.querySelector('.admin-dropdown');
-
     // Mobile main navigation
     if (toggle && menu) {
       toggle.addEventListener('click', () => {
@@ -128,37 +85,6 @@
 
         toggle.setAttribute('aria-expanded', String(!open));
         menu.classList.toggle('is-open', !open);
-      });
-    }
-
-    // Admin dropdown
-    if (adminToggle && adminMenu && adminDropdown) {
-      adminToggle.addEventListener('click', () => {
-        const open =
-          adminToggle.getAttribute('aria-expanded') === 'true';
-
-        adminToggle.setAttribute('aria-expanded', String(!open));
-        adminMenu.classList.toggle('is-open', !open);
-        adminDropdown.hidden = open;
-      });
-
-      // Close when clicking outside the Admin menu
-      document.addEventListener('click', event => {
-        if (!adminMenu.contains(event.target)) {
-          adminToggle.setAttribute('aria-expanded', 'false');
-          adminMenu.classList.remove('is-open');
-          adminDropdown.hidden = true;
-        }
-      });
-
-      // Close dropdown with Escape
-      document.addEventListener('keydown', event => {
-        if (event.key === 'Escape') {
-          adminToggle.setAttribute('aria-expanded', 'false');
-          adminMenu.classList.remove('is-open');
-          adminDropdown.hidden = true;
-          adminToggle.focus();
-        }
       });
     }
 
@@ -204,13 +130,15 @@
             <h2>Explore</h2>
             ${link('about.html', 'About LDF')}
             ${link('our-work.html', 'Our work')}
-            ${link('hope.html', 'HOPE Project')}
+            ${link('projects.html', 'Our projects')}
+            ${link('hope.html', 'LDF Hope')}
             ${link('learning.html', 'Learning Hub')}
             ${link('impact.html', 'Impact & reports')}
           </div>
 
           <div>
             <h2>Participate</h2>
+            <a href="${APP}#/join" target="_blank" rel="noopener noreferrer">Join the app</a>
             ${link('get-involved.html', 'Get involved')}
             ${link('gallery.html', 'Gallery')}
             ${link('contact.html', 'Contact')}
@@ -220,8 +148,10 @@
             <h2>Information</h2>
             ${link('privacy.html', 'Privacy policy')}
             ${link('terms.html', 'Terms of use')}
+            <a href="${APP}#/policies/safeguarding" target="_blank" rel="noopener noreferrer">Child safeguarding</a>
             ${link('accessibility.html', 'Accessibility')}
             <a data-email href="#">Email LDF</a>
+            <div class="foot-socials" id="foot-socials"></div>
           </div>
 
         </div>

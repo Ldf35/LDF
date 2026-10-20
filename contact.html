@@ -12,7 +12,7 @@
     content="Contact Life Development Foundation about HOPE, learning, volunteering, partnerships and community development."
   >
 
-  <meta name="theme-color" content="#002B7F">
+  <meta name="theme-color" content="#4b1d7a">
 
   <link rel="icon" href="assets/ldf-mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css">
@@ -63,7 +63,7 @@
       place-items: center;
       border-radius: 12px;
       background: #edf2ff;
-      color: #002B7F;
+      color: #4b1d7a;
     }
 
     .contact-icon svg {
@@ -83,7 +83,7 @@
     }
 
     .contact-method a {
-      color: #002B7F;
+      color: #4b1d7a;
       font-weight: 600;
     }
 
@@ -135,7 +135,7 @@
       border: 1px solid #dce4f1;
       border-radius: 13px;
       background: #fff;
-      color: #002B7F;
+      color: #4b1d7a;
       transition: transform 0.2s ease, background 0.2s ease;
     }
 
@@ -227,7 +227,7 @@
       margin-top: 30px;
       padding: 28px;
       border-radius: 18px;
-      background: #002B7F;
+      background: #4b1d7a;
       color: #fff;
     }
 
@@ -269,7 +269,7 @@
   </style>
 
   <script defer src="js/config.js"></script>
-  <script defer src="js/main.js"></script>
+  <script defer src="js/main.js"></script><script defer src="js/live.js"></script>
 </head>
 
 <body>
@@ -323,10 +323,10 @@
               <div>
                 <h3>Email LDF</h3>
                 <p>
-                  <a href="mailto:lifedevelopmentfoundation.uk@gmail.com">
-                    lifedevelopmentfoundation.uk@gmail.com
-                  </a>
+                  <a data-email href="mailto:lifedevelopmentfoundation.docs@gmail.com">lifedevelopmentfoundation.docs@gmail.com</a>
                 </p>
+                <p><a data-phone hidden href="#"></a></p>
+                <p data-address hidden></p>
               </div>
             </div>
 
@@ -349,10 +349,10 @@
               </div>
             </div>
 
-            <!-- WHATSAPP: REPLACE THE PLACEHOLDER NUMBER -->
+            
             <a
-              class="whatsapp-link"
-              href="https://wa.me/REPLACE_WITH_LDF_NUMBER"
+              class="whatsapp-link" data-whatsapp hidden
+              href="#"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Contact LDF on WhatsApp"
@@ -363,7 +363,7 @@
               Message LDF on WhatsApp
             </a>
 
-            <!-- SOCIAL MEDIA: REPLACE PLACEHOLDER URLS -->
+            
             <div class="social-section">
               <h3>Connect with LDF</h3>
 
@@ -372,65 +372,7 @@
                 learning opportunities and programme updates.
               </p>
 
-              <div class="social-links">
-
-                <a
-                  class="social-link"
-                  href="https://www.facebook.com/REPLACE_WITH_LDF_PAGE"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LDF on Facebook"
-                  title="Facebook"
-                >
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <path d="M13.5 21v-8.2h2.76l.41-3.2H13.5V7.56c0-.93.26-1.56 1.6-1.56h1.7V3.14A22.5 22.5 0 0 0 14.32 3c-2.46 0-4.15 1.5-4.15 4.25V9.6H7.4v3.2h2.77V21h3.33Z"/>
-                  </svg>
-                </a>
-
-                <a
-                  class="social-link"
-                  href="https://www.instagram.com/REPLACE_WITH_LDF_PAGE/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LDF on Instagram"
-                  title="Instagram"
-                >
-                  <svg viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="1.8"
-                    aria-hidden="true">
-                    <rect x="3" y="3" width="18" height="18" rx="5"/>
-                    <circle cx="12" cy="12" r="4"/>
-                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-                  </svg>
-                </a>
-
-                <a
-                  class="social-link"
-                  href="https://www.youtube.com/@REPLACE_WITH_LDF_CHANNEL"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LDF on YouTube"
-                  title="YouTube"
-                >
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/>
-                  </svg>
-                </a>
-
-                <a
-                  class="social-link"
-                  href="https://www.linkedin.com/company/REPLACE_WITH_LDF_PAGE/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LDF on LinkedIn"
-                  title="LinkedIn"
-                >
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <path d="M5.2 3a2.2 2.2 0 1 0 0 4.4 2.2 2.2 0 0 0 0-4.4ZM3.3 9h3.8v12H3.3V9Zm6.2 0h3.6v1.64h.05A3.95 3.95 0 0 1 16.7 8.7c3.85 0 4.56 2.53 4.56 5.82V21h-3.76v-5.75c0-1.37-.03-3.13-1.91-3.13-1.92 0-2.21 1.5-2.21 3.03V21H9.5V9Z"/>
-                  </svg>
-                </a>
-
-              </div>
+              <div class="social-links socs" data-socials></div>
             </div>
 
             <div class="contact-note">
@@ -449,12 +391,13 @@
             <h2 id="contact-form-title">Send an Enquiry</h2>
 
             <p>
-              Complete the form below to prepare an email using your
-              device's email application. Your message is not saved
-              to an LDF database by this form.
+              Send us a message below. It goes straight to the LDF team
+              and we will reply by e-mail. Please do not include sensitive
+              personal details.
             </p>
 
             <form class="contact-form" id="contact-form">
+              <input name="website" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
 
               <label for="name">Your name</label>
               <input
@@ -507,14 +450,13 @@
                   required
                 >
                 <span>
-                  I understand that this form opens an email draft in
-                  my email application. I will avoid including sensitive
-                  personal information.
+                  I have read the <a href="privacy.html">privacy policy</a> and will
+                  avoid including sensitive personal information.
                 </span>
               </label>
 
               <button class="button button-primary" type="submit">
-                Prepare Email
+                Send message
               </button>
 
               <p
@@ -552,48 +494,7 @@
   <div id="site-footer"></div>
 
 
-  <!-- Contact form: prepares an email draft, does not send or store it -->
-  <script>
-    (function () {
-      const form = document.getElementById("contact-form");
-      const status = document.getElementById("form-message");
-
-      if (!form || !status) return;
-
-      form.addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        if (!form.reportValidity()) return;
-
-        const data = new FormData(form);
-        const name = String(data.get("name") || "").trim();
-        const email = String(data.get("email") || "").trim();
-        const topic = String(data.get("topic") || "General enquiry").trim();
-        const message = String(data.get("message") || "").trim();
-
-        const subject = "LDF Enquiry: " + topic;
-
-        const body = [
-          "Name: " + name,
-          "Reply email: " + email,
-          "Enquiry type: " + topic,
-          "",
-          "Message:",
-          message
-        ].join("\n");
-
-        const mailto =
-          "mailto:lifedevelopmentfoundation.uk@gmail.com" +
-          "?subject=" + encodeURIComponent(subject) +
-          "&body=" + encodeURIComponent(body);
-
-        status.textContent =
-          "Opening your email application. Please review the draft and press Send there.";
-
-        window.location.href = mailto;
-      });
-    })();
-  </script>
+  
 
 </body>
 </html>
