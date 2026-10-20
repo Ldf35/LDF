@@ -51,12 +51,10 @@
             type="button"
             aria-expanded="false"
             aria-controls="primary-nav"
-            aria-label="Toggle navigation"
+            aria-label="Open menu"
           >
-            <span></span>
-            <span></span>
-            <span></span>
-            <span class="sr-only">Toggle navigation</span>
+            <img src="assets/ldf-icon.png" alt="" width="34" height="34">
+            <span class="menu-label">Menu</span>
           </button>
 
           <nav
@@ -130,6 +128,7 @@
             ${link('hope.html', 'Hope for Families')}
             ${link('learning.html', 'Learning Hub')}
             ${link('tutors.html', 'Tutors')}
+            ${link('gallery.html', 'Photo gallery')}
             ${link('app.html', 'The LDF app')}
           </div>
 

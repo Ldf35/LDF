@@ -195,13 +195,10 @@ select {
   padding: 10px;
 }
 
-.menu-toggle > span:not(.sr-only) {
-  display: block;
-  width: 22px;
-  height: 2px;
-  background: var(--blue);
-  margin: 4px;
-}
+.menu-toggle { align-items: center; gap: 8px; padding: 6px 12px 6px 8px; border-radius: 99px; cursor: pointer; font-weight: 700; color: var(--blue); box-shadow: 0 2px 8px rgba(75, 29, 122, .15); }
+.menu-toggle img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
+.menu-toggle .menu-label { font-size: 14px; }
+.menu-toggle[aria-expanded="true"] { background: #f1e7f8; }
 
 
 /* =========================================================
@@ -859,7 +856,7 @@ select {
   }
 
   .menu-toggle {
-    display: block;
+    display: inline-flex;
   }
 
   .primary-nav {
@@ -1061,3 +1058,16 @@ select {
 .ticks.plain li::before { content: "•"; background: #f1e7f8; color: var(--purple); }
 .card .small, .small { font-size: 14px; color: var(--muted); }
 .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
+
+.gal-grid { columns: 3 260px; column-gap: 16px; }
+.gal-item { display: block; margin: 0 0 16px; break-inside: avoid; border-radius: 18px; overflow: hidden; background: #fff; box-shadow: 0 8px 24px rgba(75, 29, 122, .16); text-decoration: none; transition: transform .2s; }
+.gal-item:hover { transform: translateY(-3px); }
+.gal-item img { width: 100%; display: block; }
+.gal-item span { display: block; padding: 10px 14px; font-size: 14px; color: var(--ink); }
+.lightbox { position: fixed; inset: 0; z-index: 100; background: rgba(20, 8, 38, .92); display: flex; align-items: center; justify-content: center; padding: 20px; }
+.lightbox[hidden] { display: none; }
+.lightbox figure { margin: 0; max-width: min(1100px, 100%); text-align: center; }
+.lightbox img { max-width: 100%; max-height: 78vh; border-radius: 14px; }
+.lightbox figcaption { color: #fff; margin-top: 10px; }
+.lb-close, .lb-nav { position: absolute; background: rgba(255, 255, 255, .18); color: #fff; border: 0; width: 48px; height: 48px; border-radius: 50%; font-size: 30px; cursor: pointer; }
+.lb-close { top: 16px; right: 16px; } .lb-nav.prev { left: 12px; } .lb-nav.next { right: 12px; }
