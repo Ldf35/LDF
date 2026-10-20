@@ -92,6 +92,14 @@
       }).catch(() => stats.forEach((el) => { el.innerHTML = ''; }));
     }
 
+    // coaches
+    document.querySelectorAll('[data-live="coaches"]').forEach((el) => {
+      rpc('public_coaches').then((cs) => {
+        el.innerHTML = cs.length ? cs.map((c) => `<article class="card"><h3>${esc(c.name)}</h3><p class="where">${esc(c.headline || 'Volunteer Coach')}</p>${c.bio ? `<p>${esc(c.bio)}</p>` : ''}<p class="small">${Number(c.sessions || 0)} sessions given</p></article>`).join('')
+          : '<p class="muted">Our Coaches will appear here as they are approved. Want to help? <a href="https://ldf-platform.vercel.app/#/join">Apply to be a Coach</a>.</p>';
+      }).catch(() => { el.innerHTML = ''; });
+    });
+
     // projects
     const lists = document.querySelectorAll('[data-live="projects"]');
     const mapEl = document.getElementById('pj-map');

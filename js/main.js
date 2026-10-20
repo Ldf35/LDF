@@ -8,14 +8,12 @@
   // Main website navigation
   const nav = [
     ['index.html', 'Home'],
-    ['about.html', 'About'],
-    ['our-work.html', 'Our Work'],
-    ['projects.html', 'Projects'],
-    ['hope.html', 'HOPE'],
+    ['about.html', 'About us'],
+    ['projects.html', 'What we do'],
+    ['hope.html', 'Hope for Families'],
     ['learning.html', 'Learning Hub'],
-    ['impact.html', 'Impact'],
-    ['gallery.html', 'Gallery'],
-    ['get-involved.html', 'Get Involved'],
+    ['tutors.html', 'Tutors'],
+    ['app.html', 'LDF App'],
     ['contact.html', 'Contact']
   ];
 
@@ -68,7 +66,6 @@
           >
             ${nav.map(([href, label]) => link(href, label)).join('')}
 
-            <a class="nav-signin" href="${APP}#/login" target="_blank" rel="noopener noreferrer">Sign in</a>
             <a class="nav-cta" href="${APP}" target="_blank" rel="noopener noreferrer">Open the app</a>
           </nav>
 
@@ -128,20 +125,19 @@
 
           <div>
             <h2>Explore</h2>
-            ${link('about.html', 'About LDF')}
-            ${link('our-work.html', 'Our work')}
-            ${link('projects.html', 'Our projects')}
-            ${link('hope.html', 'LDF Hope')}
+            ${link('about.html', 'About us')}
+            ${link('projects.html', 'What we do')}
+            ${link('hope.html', 'Hope for Families')}
             ${link('learning.html', 'Learning Hub')}
-            ${link('impact.html', 'Impact & reports')}
+            ${link('tutors.html', 'Tutors')}
+            ${link('app.html', 'The LDF app')}
           </div>
 
           <div>
-            <h2>Participate</h2>
-            <a href="${APP}#/join" target="_blank" rel="noopener noreferrer">Join the app</a>
-            ${link('get-involved.html', 'Get involved')}
-            ${link('gallery.html', 'Gallery')}
-            ${link('contact.html', 'Contact')}
+            <h2>Join in</h2>
+            <a href="${APP}#/join" target="_blank" rel="noopener noreferrer">Volunteer or partner</a>
+            <a href="${APP}#/give" target="_blank" rel="noopener noreferrer">Give through LDF Hope</a>
+            ${link('contact.html', 'Contact us')}
           </div>
 
           <div>
@@ -149,7 +145,6 @@
             ${link('privacy.html', 'Privacy policy')}
             ${link('terms.html', 'Terms of use')}
             <a href="${APP}#/policies/safeguarding" target="_blank" rel="noopener noreferrer">Child safeguarding</a>
-            ${link('accessibility.html', 'Accessibility')}
             <a data-email href="#">Email LDF</a>
             <div class="foot-socials" id="foot-socials"></div>
           </div>

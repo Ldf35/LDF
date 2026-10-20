@@ -1052,3 +1052,12 @@ select {
 .soc.youtube { background: #e00; } .soc.tiktok { background: #111; } .soc.x { background: #000; } .soc.whatsapp { background: #25a244; } .soc.website { background: var(--cyan); }
 .foot-socials { margin-top: 10px; } .foot-socials .soc { width: 38px; height: 38px; display: inline-grid; margin: 0 6px 6px 0; }
 @media (max-width: 900px) { .nav-signin { display: block; } .pj-map { height: 320px; } }
+
+.two-col { display: grid; grid-template-columns: 1.1fr .9fr; gap: 32px; align-items: start; }
+@media (max-width: 860px) { .two-col { grid-template-columns: 1fr; } }
+.ticks { list-style: none; padding: 0; margin: 12px 0; display: grid; gap: 8px; }
+.ticks li { padding-left: 30px; position: relative; }
+.ticks li::before { content: "✓"; position: absolute; left: 0; top: 0; width: 22px; height: 22px; border-radius: 50%; background: #e7f2c9; color: #4a5f10; text-align: center; font-weight: 800; font-size: 14px; line-height: 22px; }
+.ticks.plain li::before { content: "•"; background: #f1e7f8; color: var(--purple); }
+.card .small, .small { font-size: 14px; color: var(--muted); }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
