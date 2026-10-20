@@ -21,22 +21,51 @@
 <body>
   <div id="site-header"></div>
   <main>
-    <section class="page-hero"><div class="container"><p class="eyebrow">LIFE DEVELOPMENT FOUNDATION</p><h1>Photo gallery</h1>
-      <p class="lead">Moments from our programmes. Tap a photo to see it larger. We only share group photos, with consent, and never close-ups of children.</p></div></section>
-    <section class="section"><div class="container"><div class="gal-grid"><a class="gal-item" href="assets/gallery/13.jpg" data-cap="Group photo after an LDF programme with the children, volunteers and monks"><img src="assets/gallery/13.jpg" alt="Group photo after an LDF programme with the children, volunteers and monks" loading="lazy"><span>Group photo after an LDF programme with the children, volunteers and monks</span></a><a class="gal-item" href="assets/gallery/14.jpg" data-cap="LDF programme group in front of the foundation banner"><img src="assets/gallery/14.jpg" alt="LDF programme group in front of the foundation banner" loading="lazy"><span>LDF programme group in front of the foundation banner</span></a><a class="gal-item" href="assets/gallery/11.jpg" data-cap="Group seated together during an LDF session"><img src="assets/gallery/11.jpg" alt="Group seated together during an LDF session" loading="lazy"><span>Group seated together during an LDF session</span></a><a class="gal-item" href="assets/gallery/12.jpg" data-cap="Group activity outdoors with a balloon game"><img src="assets/gallery/12.jpg" alt="Group activity outdoors with a balloon game" loading="lazy"><span>Group activity outdoors with a balloon game</span></a><a class="gal-item" href="assets/gallery/07.jpg" data-cap="Group session in the hall"><img src="assets/gallery/07.jpg" alt="Group session in the hall" loading="lazy"><span>Group session in the hall</span></a><a class="gal-item" href="assets/gallery/08.jpg" data-cap="Group session with a presentation"><img src="assets/gallery/08.jpg" alt="Group session with a presentation" loading="lazy"><span>Group session with a presentation</span></a><a class="gal-item" href="assets/gallery/01.jpg" data-cap="Lighting the traditional oil lamp to open a programme"><img src="assets/gallery/01.jpg" alt="Lighting the traditional oil lamp to open a programme" loading="lazy"><span>Lighting the traditional oil lamp to open a programme</span></a><a class="gal-item" href="assets/gallery/02.jpg" data-cap="LDF volunteers preparing materials"><img src="assets/gallery/02.jpg" alt="LDF volunteers preparing materials" loading="lazy"><span>LDF volunteers preparing materials</span></a></div>
-      <p class="center"><a class="button button-secondary" href="projects.html">See the projects behind the photos</a></p></div></section>
+    <section class="g-hero">
+      <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+      <div class="container">
+        <p class="eyebrow">LIFE DEVELOPMENT FOUNDATION</p>
+        <h1>Every moment <span>tells a story.</span></h1>
+        <p class="lead">Moments from our programmes. Tap a photo to see it larger. We only share group photos, with consent, and never close-ups of children.</p>
+        <div class="g-filters" role="group" aria-label="Filter photos"><button class="on" data-f="all">All</button><button data-f="Group">Groups</button><button data-f="Session">Sessions</button><button data-f="Activity">Activities</button><button data-f="Opening">Openings</button><button data-f="Volunteers">Volunteers</button></div>
+      </div>
+    </section>
+    <section class="section g-wrap"><div class="container">
+      <div class="g-grid" id="g-grid"><a class="g-tile wide" href="assets/gallery/13.jpg" data-cap="Together after an LDF programme" data-tag="Group" style="--i:0"><img src="assets/gallery/13.jpg" alt="Together after an LDF programme" loading="lazy"><span class="g-cap"><em>Group</em><b>Together after an LDF programme</b></span></a><a class="g-tile tall" href="assets/gallery/14.jpg" data-cap="Under the LDF banner" data-tag="Group" style="--i:1"><img src="assets/gallery/14.jpg" alt="Under the LDF banner" loading="lazy"><span class="g-cap"><em>Group</em><b>Under the LDF banner</b></span></a><a class="g-tile " href="assets/gallery/11.jpg" data-cap="Learning side by side" data-tag="Session" style="--i:2"><img src="assets/gallery/11.jpg" alt="Learning side by side" loading="lazy"><span class="g-cap"><em>Session</em><b>Learning side by side</b></span></a><a class="g-tile wide" href="assets/gallery/12.jpg" data-cap="Play, laughter and teamwork" data-tag="Activity" style="--i:3"><img src="assets/gallery/12.jpg" alt="Play, laughter and teamwork" loading="lazy"><span class="g-cap"><em>Activity</em><b>Play, laughter and teamwork</b></span></a><a class="g-tile " href="assets/gallery/07.jpg" data-cap="Listening and learning" data-tag="Session" style="--i:4"><img src="assets/gallery/07.jpg" alt="Listening and learning" loading="lazy"><span class="g-cap"><em>Session</em><b>Listening and learning</b></span></a><a class="g-tile" href="assets/gallery/08.jpg" data-cap="Ideas on the screen" data-tag="Session" style="--i:5"><img src="assets/gallery/08.jpg" alt="Ideas on the screen" loading="lazy"><span class="g-cap"><em>Session</em><b>Ideas on the screen</b></span></a><a class="g-tile " href="assets/gallery/01.jpg" data-cap="Opening with the oil lamp" data-tag="Opening" style="--i:6"><img src="assets/gallery/01.jpg" alt="Opening with the oil lamp" loading="lazy"><span class="g-cap"><em>Opening</em><b>Opening with the oil lamp</b></span></a><a class="g-tile wide" href="assets/gallery/02.jpg" data-cap="Volunteers preparing materials" data-tag="Volunteers" style="--i:7"><img src="assets/gallery/02.jpg" alt="Volunteers preparing materials" loading="lazy"><span class="g-cap"><em>Volunteers</em><b>Volunteers preparing materials</b></span></a></div>
+      <p class="center g-more"><a class="button button-primary" href="projects.html">See the projects behind the photos</a> <a class="button button-secondary" href="https://ldf-platform.vercel.app/#/join" target="_blank" rel="noopener noreferrer">Be part of the next one</a></p>
+    </div></section>
   </main>
   <div id="site-footer"></div>
-  <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photo viewer"><button type="button" class="lb-close" aria-label="Close photo">×</button><button type="button" class="lb-nav prev" aria-label="Previous photo">‹</button><figure><img id="lb-img" alt=""><figcaption id="lb-cap"></figcaption></figure><button type="button" class="lb-nav next" aria-label="Next photo">›</button></div>
+  <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photo viewer"><button type="button" class="lb-close" aria-label="Close photo">×</button><button type="button" class="lb-nav prev" aria-label="Previous photo">‹</button><figure><img id="lb-img" alt=""><figcaption><span id="lb-cap"></span><small id="lb-count"></small></figcaption></figure><button type="button" class="lb-nav next" aria-label="Next photo">›</button></div>
   <script>
     (function () {
-      var items = [].slice.call(document.querySelectorAll('.gal-item')), box = document.getElementById('lightbox'), img = document.getElementById('lb-img'), cap = document.getElementById('lb-cap'), i = 0;
-      function show(n) { i = (n + items.length) % items.length; img.src = items[i].href; img.alt = items[i].dataset.cap; cap.textContent = items[i].dataset.cap; box.hidden = false; document.body.style.overflow = 'hidden'; }
+      var all = [].slice.call(document.querySelectorAll('.g-tile')), box = document.getElementById('lightbox'), img = document.getElementById('lb-img'), cap = document.getElementById('lb-cap'), cnt = document.getElementById('lb-count'), i = 0, tx = 0;
+      var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function visible() { return all.filter(function (a) { return !a.classList.contains('hide'); }); }
+      function show(n) { var v = visible(); if (!v.length) return; i = (n + v.length) % v.length; box.hidden = false; document.body.style.overflow = 'hidden';
+        img.classList.remove('in'); img.src = v[i].href; img.alt = v[i].dataset.cap; cap.textContent = v[i].dataset.cap; cnt.textContent = (i + 1) + ' / ' + v.length;
+        requestAnimationFrame(function () { img.classList.add('in'); }); }
       function hide() { box.hidden = true; document.body.style.overflow = ''; }
-      items.forEach(function (a, n) { a.addEventListener('click', function (e) { e.preventDefault(); show(n); }); });
+      all.forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); show(visible().indexOf(a)); }); });
       box.querySelector('.lb-close').onclick = hide; box.querySelector('.prev').onclick = function () { show(i - 1); }; box.querySelector('.next').onclick = function () { show(i + 1); };
       box.addEventListener('click', function (e) { if (e.target === box) hide(); });
+      box.addEventListener('touchstart', function (e) { tx = e.touches[0].clientX; }, { passive: true });
+      box.addEventListener('touchend', function (e) { var d = e.changedTouches[0].clientX - tx; if (Math.abs(d) > 50) show(i + (d < 0 ? 1 : -1)); });
       document.addEventListener('keydown', function (e) { if (box.hidden) return; if (e.key === 'Escape') hide(); if (e.key === 'ArrowLeft') show(i - 1); if (e.key === 'ArrowRight') show(i + 1); });
+      // filters
+      document.querySelectorAll('.g-filters button').forEach(function (b) { b.addEventListener('click', function () {
+        document.querySelectorAll('.g-filters button').forEach(function (x) { x.classList.toggle('on', x === b); });
+        all.forEach(function (a) { var ok = b.dataset.f === 'all' || a.dataset.tag === b.dataset.f; a.classList.toggle('hide', !ok); });
+      }); });
+      // reveal on scroll
+      if (!reduce && 'IntersectionObserver' in window) {
+        all.forEach(function (a) { a.classList.add('pre'); });
+        var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('show'); io.unobserve(e.target); } }); }, { threshold: .12 });
+        all.forEach(function (a) { io.observe(a); });
+        // gentle parallax on the hero blobs
+        var blobs = document.querySelectorAll('.g-hero .blob');
+        window.addEventListener('scroll', function () { var y = window.scrollY; blobs.forEach(function (b, n) { b.style.transform = 'translateY(' + (y * (0.08 + n * 0.05)) + 'px)'; }); }, { passive: true });
+      }
     })();
   </script>
 </body>
