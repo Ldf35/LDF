@@ -100,6 +100,23 @@
       }).catch(() => { el.innerHTML = ''; });
     });
 
+    // community workshops (free, run by members; join in the app)
+    const wk = document.querySelectorAll('[data-live="workshops"]');
+    if (wk.length) {
+      const rows = await rpc('community_workshops').catch(() => []);
+      const fmt = (v) => new Date(v).toLocaleString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+      wk.forEach((el) => {
+        const sec = el.closest('[data-wk-section]');
+        const list = rows.slice(0, Number(el.dataset.limit || 6));
+        if (!list.length) { if (sec) sec.hidden = true; return; }
+        el.innerHTML = list.map((w) => `<article class="card pj-card"><div class="pj-top"><span class="status ongoing">${w.tier === 'premium' ? 'Premium' : 'Free'}</span><span class="kind">${esc(w.language)}</span></div>
+          <h3>${esc(w.title)}</h3><p class="muted">${esc(fmt(w.starts_at))} · ${Number(w.duration_min)} min · hosted by ${esc(w.host_name)}</p>
+          <p>${esc(String(w.about).slice(0, 160))}${String(w.about).length > 160 ? '…' : ''}</p>
+          <a class="button button-secondary" href="${esc((cfg.appUrl || '') + '#/workshops')}" target="_blank" rel="noopener noreferrer">Join in the app</a></article>`).join('');
+        if (sec) sec.hidden = false;
+      });
+    }
+
     // projects
     const lists = document.querySelectorAll('[data-live="projects"]');
     const mapEl = document.getElementById('pj-map');
