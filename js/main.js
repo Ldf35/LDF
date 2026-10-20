@@ -141,8 +141,8 @@
 
           <div>
             <h2>Information</h2>
-            ${link('privacy.html', 'Privacy policy')}
-            ${link('terms.html', 'Terms of use')}
+            <a href="${APP}#/policies/privacy" target="_blank" rel="noopener noreferrer">Privacy policy</a>
+            <a href="${APP}#/policies/terms" target="_blank" rel="noopener noreferrer">Terms of use</a>
             <a href="${APP}#/policies/safeguarding" target="_blank" rel="noopener noreferrer">Child safeguarding</a>
             <a data-email href="#">Email LDF</a>
             <div class="foot-socials" id="foot-socials"></div>
