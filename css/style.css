@@ -1117,3 +1117,60 @@ select {
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } .g-tile.pre { opacity: 1; transform: none; } }
 
 [hidden] { display: none !important; }
+
+
+/* =========================================================
+   LDF IN 3D: the guide, the main idea and the AI team
+   ========================================================= */
+
+.ldfg { position: fixed; left: 0; top: 0; z-index: 60; pointer-events: none; will-change: transform; }
+.ldfg canvas { display: block; pointer-events: auto; cursor: pointer; }
+.ldfg-say { position: absolute; right: 0; bottom: calc(100% + 4px); width: 230px; max-width: calc(100vw - 24px); pointer-events: auto;
+  background: #fff; color: var(--ink); border: 1px solid var(--line); border-left: 5px solid var(--gc, var(--purple)); border-radius: 16px; border-bottom-right-radius: 4px;
+  box-shadow: 0 14px 34px rgba(75, 29, 122, .18); padding: 10px 12px; font-size: .9rem; line-height: 1.45; }
+.ldfg-say[hidden] { display: none; }
+.ldfg-say b { display: block; color: var(--gc, var(--purple)); font-size: .85rem; }
+.ldfg-act { display: flex; gap: 8px; align-items: center; margin: 8px 0 0; font-size: .8rem; }
+.ldfg-act a { color: var(--accent); font-weight: 700; }
+.ldfg-act button, .ldfg-show { font: inherit; font-size: .78rem; font-weight: 700; border: 1px solid var(--line); background: #fff; color: var(--ink); border-radius: 999px; padding: 3px 10px; cursor: pointer; }
+.ldfg.min canvas { display: none; }
+.ldfg-show { position: absolute; right: 0; bottom: 0; pointer-events: auto; padding: 8px 14px; background: linear-gradient(120deg, #7b2a8e, #1f4fd1 60%, #2fc3d4); color: #fff; border: 0; box-shadow: var(--shadow); }
+.ldfg-show[hidden] { display: none; }
+@media (max-width: 899px) { .ldfg-say { width: 200px; font-size: .85rem; } }
+.ldfg.side .ldfg-say { right: auto; left: 0; border-bottom-right-radius: 16px; border-bottom-left-radius: 4px; }
+
+.ldf-idea-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 960px) { .ldf-idea-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 540px) { .ldf-idea-grid { grid-template-columns: minmax(0, 1fr); } }
+.ldf-idea-grid article { position: relative; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); overflow: hidden; min-width: 0; }
+.ldf-idea-grid article::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 5px; background: var(--c); }
+.ldf-idea-grid i { display: block; width: 34px; height: 34px; border-radius: 50%; background: var(--c); margin-bottom: 10px;
+  box-shadow: inset -5px -5px 10px rgba(0,0,0,.2), inset 4px 4px 8px rgba(255,255,255,.5); animation: ldf-bob 3s ease-in-out infinite; }
+.ldf-idea-grid article:nth-child(2) i { animation-delay: -.7s; } .ldf-idea-grid article:nth-child(3) i { animation-delay: -1.4s; } .ldf-idea-grid article:nth-child(4) i { animation-delay: -2.1s; }
+@keyframes ldf-bob { 50% { transform: translateY(-5px); } }
+.ldf-idea-grid h3 { margin: 0 0 6px; color: var(--blue); }
+.ldf-idea-grid p { margin: 0; color: var(--muted); }
+
+.ldf-village { position: relative; aspect-ratio: 16 / 9; max-width: 100%; border-radius: 24px; overflow: hidden; border: 1px solid var(--line);
+  background: radial-gradient(120% 90% at 50% 20%, #f4fbfe 0%, #d9eef5 70%, #cfe7ef 100%); box-shadow: var(--shadow); }
+@media (max-width: 640px) { .ldf-village { aspect-ratio: 4 / 5; } }
+.ldf-village.flat { display: none; }
+.ldf-village canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; cursor: grab; }
+.ldf-vlayer { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.ldf-vhint { position: absolute; left: 14px; bottom: 12px; font-size: .78rem; font-weight: 700; color: #1d3a20; background: rgba(255,255,255,.85); border-radius: 999px; padding: 4px 10px; }
+.tag3d { position: absolute; left: 0; top: 0; background: #fff; color: #132031; border-radius: 10px; padding: 3px 8px; font-size: 11.5px; line-height: 1.25;
+  box-shadow: 0 4px 12px rgba(0,0,0,.18); border-left: 4px solid var(--tc); white-space: nowrap; max-width: 220px; transition: opacity .2s; }
+.tag3d b { display: block; font-size: 11px; color: var(--tc); filter: brightness(.8); }
+.tag3d.idle span { display: none; }
+.place3d { position: absolute; left: 0; top: 0; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #1d3a20; background: rgba(255,255,255,.8); border-radius: 6px; padding: 2px 6px; white-space: nowrap; }
+@media (max-width: 640px) { .tag3d { font-size: 10px; padding: 2px 6px; } .tag3d span { display: none; } .tag3d.idle { opacity: 0 !important; } .place3d { font-size: 8.5px; } }
+.ldf-live { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+@media (max-width: 960px) { .ldf-live { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .ldf-live { grid-template-columns: minmax(0, 1fr); } }
+.ldf-lv { display: grid; grid-template-columns: 12px minmax(0, 1fr); gap: 10px; align-items: start; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; min-width: 0; }
+.ldf-lv i { width: 12px; height: 12px; border-radius: 50%; background: var(--c); box-shadow: 0 0 8px var(--c); margin-top: 6px; }
+.ldf-lv b { display: block; color: var(--ink); }
+.ldf-lv small { display: block; color: var(--muted); font-size: .78rem; }
+.ldf-lv span { display: block; font-size: .88rem; }
+.ldf-approve { margin: 16px 0 0; padding: 14px 16px; border-radius: 14px; border: 1px dashed var(--line); background: #fff; font-weight: 700; color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .ldf-idea-grid i { animation: none; } }
