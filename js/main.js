@@ -249,4 +249,10 @@
         `&body=${encodeURIComponent(body)}`;
     });
   }
+
+  // LDF, the 3D guide (loads itself after the page is ready)
+  const guide = document.createElement('script');
+  guide.src = 'js/ldf-guide.js';
+  guide.defer = true;
+  document.body.appendChild(guide);
 })();
