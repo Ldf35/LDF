@@ -288,15 +288,51 @@
       </div>
     </section>
 
-    <section class="section section-tint" data-wk-section hidden>
+    <!-- PATHFINDER -->
+    <section class="section" id="pathfinder" style="background:linear-gradient(180deg,#eef6ff 0%,#ffffff 100%)">
+      <div class="container split">
+        <div>
+          <p class="eyebrow">PATHFINDER · FREE IN THE APP</p>
+          <h2>Stuck with a problem? Find your way forward.</h2>
+          <p>
+            Exams went wrong, a hard decision at home, not sure what to do next? Tell Pathfinder in your own words,
+            in English, Sinhala or Tamil. It asks a few questions, explores around 30 possible paths from every angle,
+            and shows the ones that fit you best, with first steps for this week.
+          </p>
+          <ul class="ticks">
+            <li>Private: what you write is not saved</li>
+            <li>Talk any path through: “What if my parents get angry?”</li>
+            <li>Want a real person? Pathfinder can link you to a counsellor checked by LDF</li>
+          </ul>
+          <div class="actions">
+            <a class="button button-primary" href="https://ldf-platform.vercel.app/#/pathfinder" target="_blank" rel="noopener noreferrer">Try Pathfinder</a>
+            <a class="button button-secondary" href="https://ldf-platform.vercel.app/#/counselling" target="_blank" rel="noopener noreferrer">Talk to a counsellor</a>
+          </div>
+          <p class="small">Pathfinder is a computer helper, not a counsellor, doctor or lawyer. If you are in danger, call 1926 (24 hours) or 119 now.</p>
+        </div>
+        <div class="card">
+          <h3>How it works</h3>
+          <ol class="steps">
+            <li><strong>Describe the problem</strong> in a few sentences. No names or phone numbers needed.</li>
+            <li><strong>Answer a few questions</strong> so Pathfinder understands your situation.</li>
+            <li><strong>See your best paths</strong>, each scored for how well it fits you, with first steps.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tint" data-wk-section>
       <div class="container">
         <div class="section-heading">
           <p class="eyebrow">COMMUNITY WORKSHOPS</p>
-          <h2>Free online workshops you can join.</h2>
-          <p>Run by members of our community and recorded for safety. Join for free in the LDF app, or host your own.</p>
+          <h2>Workshops you can join, or host.</h2>
+          <p>Hosted by members and partners checked by LDF, online or in person. Many are free, and every workshop keeps free places for people who cannot pay.</p>
         </div>
         <div class="card-grid three" data-live="workshops" data-limit="3"></div>
-        <p class="center"><a class="button button-secondary" href="https://ldf-platform.vercel.app/#/workshops" target="_blank" rel="noopener noreferrer">See all workshops</a></p>
+        <div class="actions" style="justify-content:center;margin-top:24px">
+          <a class="button button-primary" href="https://ldf-platform.vercel.app/#/workshops" target="_blank" rel="noopener noreferrer">See all workshops</a>
+          <a class="button button-secondary" href="https://ldf-platform.vercel.app/#/workshops/host" target="_blank" rel="noopener noreferrer">Host a workshop</a>
+        </div>
       </div>
     </section>
 
@@ -332,5 +368,6 @@
   <!-- Load configuration before main JavaScript -->
   <script src="js/config.js"></script>
   <script src="js/main.js" defer></script>
+  <script src="js/live.js" defer></script>
 </body>
 </html>
