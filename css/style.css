@@ -1152,3 +1152,8 @@ select {
 .ldf-idea-grid p { margin: 0; color: var(--muted); }
 
 @media (prefers-reduced-motion: reduce) { .ldf-idea-grid i { animation: none; } }
+
+/* Join our team */
+.join-card { border-top: 5px solid var(--jc, #8e3a9f); display: flex; flex-direction: column; gap: 6px; }
+.join-card .join-dot { width: 34px; height: 34px; border-radius: 50%; background: var(--jc); box-shadow: 0 0 0 6px color-mix(in srgb, var(--jc) 18%, transparent); }
+.join-card .button { margin-top: auto; align-self: flex-start; }

@@ -12,6 +12,7 @@
     'Building stronger lives. Creating thriving communities.': ['Ayubowan! I’m LDF, the AI helper of Life Development Foundation. Scroll down and I’ll show you around.', 'wave', '#8b5cf6'],
     'Our idea': ['Our idea in four points. Every person has value, and help always comes with dignity.', 'love', '#a78bfa'],
     'Progress Begins with People.': ['Everything we do starts with people: support for families, learning, and taking part in the community.', 'talk', '#22c3dd'],
+    'There is a place for you at LDF.': ['Join us! Be a Coach, a counsellor, a volunteer, a workshop host, a partner, or part of our team.', 'celebrate', '#ec4899'],
     'Partner with LDF': ['Companies can sponsor free tutoring, Hope packages or courses. Every rupee is tracked openly in the app.', 'handshake', '#f59e0b'],
     'Five Connected Areas of Development': ['We focus on five areas: child protection, families, careers, studies, and mental health.', 'point', '#f59e0b'],
     'What LDF has done, and what comes next.': ['Here are our real projects, shown honestly as completed, running or planned.', 'thumbs', '#84cc16'],
