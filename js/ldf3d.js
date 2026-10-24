@@ -18,6 +18,26 @@
     g.traverse(o => { if (o.isMesh) o.castShadow = true; });
     return g;
   }
+  const INK = new T.MeshBasicMaterial({ color: new T.Color(0x2a1a3d).convertSRGBToLinear(), side: T.BackSide });
+  function ink(obj, t) {                               // a thin cartoon outline around a mesh (or every mesh in a group)
+    const list = [];
+    obj.traverse(m => { if (m.isMesh && !m.userData.ink) list.push(m); });
+    list.forEach(m => {
+      const o = new T.Mesh(m.geometry, INK); o.userData.ink = true;
+      o.position.copy(m.position); o.quaternion.copy(m.quaternion); o.scale.copy(m.scale).multiplyScalar(1 + (t || .05));
+      m.parent.add(o);
+    });
+    return obj;
+  }
+  let GLOW = null;
+  function glowTex() {
+    if (GLOW) return GLOW;
+    const cv = document.createElement("canvas"); cv.width = cv.height = 64;
+    const g = cv.getContext("2d"), r = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    r.addColorStop(0, "rgba(255,255,255,1)"); r.addColorStop(.35, "rgba(255,255,255,.55)"); r.addColorStop(1, "rgba(255,255,255,0)");
+    g.fillStyle = r; g.fillRect(0, 0, 64, 64);
+    GLOW = new T.CanvasTexture(cv); return GLOW;
+  }
   function onSphere(obj, yaw, pitch, r) {             // put a face part on the head's surface, facing out
     const n = new T.Vector3(s(yaw * D) * c(pitch * D), s(pitch * D), c(yaw * D) * c(pitch * D));
     obj.position.copy(n.clone().multiplyScalar(r));
@@ -37,26 +57,29 @@
       pink: new T.MeshBasicMaterial({ color: new T.Color(0xff6f9f).convertSRGBToLinear(), transparent: true, opacity: .55, depthWrite: false }),
       mouth: new T.MeshStandardMaterial({ color: new T.Color(0x3a1830).convertSRGBToLinear(), roughness: .6 }),
       bulb: new T.MeshStandardMaterial({ color: 0x2cc3d6, emissive: 0x2cc3d6, emissiveIntensity: .55, roughness: .2 }),
-      halo: new T.MeshBasicMaterial({ color: 0x7fe7f2, transparent: true, opacity: .22, depthWrite: false }),
+      halo: new T.SpriteMaterial({ map: glowTex(), color: 0x7fe7f2, transparent: true, opacity: .85, depthWrite: false }),
       jet: new T.MeshBasicMaterial({ color: 0xc6f03a, transparent: true, opacity: 0, depthWrite: false }),
     };
     const R = {};
     const root = new T.Group(), body = new T.Group();
     root.add(body);
     // legs + boots (purple left, cyan right)
+    R.knees = [];
     R.legs = [[-1, M.purple], [1, M.cyan]].map(([k, bm]) => {
       const hip = new T.Group(); hip.position.set(.22 * k, .8, 0); body.add(hip);
-      hip.add(capsule(.13, .5, M.grey));
+      hip.add(ink(capsule(.13, .27, M.grey), .06));
+      const knee = new T.Group(); knee.position.y = -.27; hip.add(knee); R.knees.push(knee);
+      knee.add(ink(capsule(.125, .23, M.grey), .06));
       const boot = new T.Mesh(new T.SphereGeometry(.2, 26, 16), bm);
-      boot.scale.set(1.15, .78, 1.5); boot.position.set(.02 * k, -.6, .09); boot.castShadow = true; hip.add(boot);
+      boot.scale.set(1.15, .78, 1.5); boot.position.set(.02 * k, -.33, .09); boot.castShadow = true; knee.add(boot); ink(boot, .05);
       const shine = new T.Mesh(new T.SphereGeometry(.05, 12, 8), M.white2); shine.scale.set(1.4, .6, .6);
-      shine.position.set(-.05, -.5, .3); shine.material = new T.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: .5 });
-      hip.add(shine);
+      shine.position.set(-.05, -.23, .3); shine.material = new T.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: .5 });
+      knee.add(shine);
       return hip;
     });
     // suit
     const prof = [[0, .62], [.4, .65], [.59, .82], [.645, 1.06], [.6, 1.34], [.42, 1.56], [0, 1.66]].map(p => new T.Vector2(p[0], p[1]));
-    const torso = new T.Mesh(new T.LatheGeometry(prof, 48), o.suit ? mat(o.suit, { roughness: .42 }) : M.white); torso.castShadow = true; body.add(torso);
+    const torso = new T.Mesh(new T.LatheGeometry(prof, 48), o.suit ? mat(o.suit, { roughness: .42 }) : M.white); torso.castShadow = true; body.add(torso); ink(torso, .035);
     // chest badge: the logo in miniature
     const badge = new T.Group(); badge.position.set(0, 1.05, .635); body.add(badge);
     const disc = new T.Mesh(new T.CylinderGeometry(.21, .21, .05, 40), M.badge); disc.rotation.x = Math.PI / 2; badge.add(disc);
@@ -69,12 +92,12 @@
     R.arms = {};
     [["L", -1, M.purple], ["R", 1, M.cyan]].forEach(([n, k, m]) => {
       const sh = new T.Group(); sh.position.set(.56 * k, 1.38, 0); sh.rotation.order = "ZXY"; body.add(sh);
-      sh.add(capsule(.115, .44, m));
+      sh.add(ink(capsule(.115, .44, m), .07));
       const el = new T.Group(); el.position.y = -.44; el.rotation.order = "ZXY"; sh.add(el);
-      el.add(capsule(.105, .34, m));
+      el.add(ink(capsule(.105, .34, m), .07));
       const hand = new T.Group(); hand.position.y = -.47; el.add(hand);
       const cuff = new T.Mesh(new T.TorusGeometry(.105, .045, 10, 26), m); cuff.rotation.x = Math.PI / 2; cuff.position.y = .08; hand.add(cuff);
-      const palm = new T.Mesh(new T.SphereGeometry(.17, 26, 18), M.glove); palm.scale.set(1, 1.06, .85); palm.castShadow = true; hand.add(palm);
+      const palm = new T.Mesh(new T.SphereGeometry(.17, 26, 18), M.glove); palm.scale.set(1, 1.06, .85); palm.castShadow = true; hand.add(palm); ink(palm, .06);
       const thumb = new T.Mesh(new T.SphereGeometry(.075, 16, 12), M.glove); thumb.scale.set(1, 1.6, 1); thumb.castShadow = true; hand.add(thumb);
       const fingers = [-1, 0, 1].map(i => {
         const f = new T.Mesh(new T.SphereGeometry(.058, 16, 12), M.glove); f.scale.set(1, 1.5, 1);
@@ -85,7 +108,7 @@
     // head on a neck pivot (nod, shake, tilt)
     const neck = new T.Group(); neck.position.set(0, 1.55, 0); body.add(neck);
     const head = new T.Group(); head.position.y = .82; neck.add(head);
-    const skull = new T.Mesh(new T.SphereGeometry(1, 56, 40), M.lime); head.scale.setScalar(.92); skull.castShadow = true; head.add(skull);
+    const skull = new T.Mesh(new T.SphereGeometry(1, 56, 40), M.lime); head.scale.setScalar(.92); skull.castShadow = true; head.add(skull); ink(skull, .03);
     const face = new T.Group(); face.rotation.order = "YXZ"; head.add(face);
     const eyes = {};
     [["L", -1], ["R", 1]].forEach(([n, k]) => {
@@ -95,22 +118,35 @@
       const hi2 = new T.Mesh(new T.SphereGeometry(.024, 10, 8), M.white2); hi2.position.set(.06, -.07, .07); g.add(hi2);
       const happy = new T.Mesh(new T.TorusGeometry(.1, .026, 8, 20, Math.PI), M.dark); happy.position.set(0, -.04, .04); g.add(happy);
       const cheek = onSphere(new T.Mesh(new T.SphereGeometry(1, 16, 12), M.pink), 33 * k, -21, .985); cheek.scale.set(.15, .09, .03); face.add(cheek);
-      eyes[n] = { g, ball, hi1, hi2, happy };
+      const bg = onSphere(new T.Group(), 18 * k, 13, 1.0); face.add(bg);
+      const brow = new T.Mesh(new T.TorusGeometry(.12, .03, 8, 16, 1.5), M.dark); brow.rotation.z = Math.PI / 2 - .75; bg.add(brow);
+      eyes[n] = { g, ball, hi1, hi2, happy, bg, brow, k, cheek };
     });
     const mouthG = onSphere(new T.Group(), 0, -25, 1.0); face.add(mouthG);
     const smile = new T.Mesh(new T.TorusGeometry(.085, .022, 8, 20, Math.PI), M.dark); smile.rotation.z = Math.PI; smile.position.z = .01; mouthG.add(smile);
     const flat = new T.Mesh(new T.CylinderGeometry(.02, .02, .12, 10), M.dark); flat.rotation.z = Math.PI / 2; flat.position.z = .01; mouthG.add(flat);
     const open = new T.Mesh(new T.SphereGeometry(1, 20, 14), M.mouth); open.scale.set(.08, .06, .03); mouthG.add(open);
     // antenna with a glowing bulb (its colour shows which agent is working)
-    const curve = new T.QuadraticBezierCurve3(new T.Vector3(0, .96, 0), new T.Vector3(-.08, 1.3, 0), new T.Vector3(.12, 1.48, 0));
-    const stem = new T.Mesh(new T.TubeGeometry(curve, 24, .032, 8, false), M.stem); stem.castShadow = true; head.add(stem);
-    const bulb = new T.Mesh(new T.SphereGeometry(.12, 22, 16), M.bulb); bulb.position.set(.12, 1.5, 0); head.add(bulb);
-    const halo = new T.Mesh(new T.SphereGeometry(.24, 20, 14), M.halo); halo.position.copy(bulb.position); head.add(halo);
+    const ant = new T.Group(); ant.position.set(0, .96, 0); head.add(ant);
+    const curve = new T.QuadraticBezierCurve3(new T.Vector3(0, 0, 0), new T.Vector3(-.08, .34, 0), new T.Vector3(.12, .52, 0));
+    const stem = new T.Mesh(new T.TubeGeometry(curve, 24, .032, 8, false), M.stem); stem.castShadow = true; ant.add(stem);
+    const bulb = new T.Mesh(new T.SphereGeometry(.12, 22, 16), M.bulb); bulb.position.set(.12, .54, 0); ant.add(bulb); ink(bulb, .08);
+    const halo = new T.Sprite(M.halo); halo.scale.setScalar(.75); halo.position.copy(bulb.position); ant.add(halo);
+    R.spring = { a: 0, v: 0, b: 0, w: 0, py: 0, pt: 0 };
     // jet glow under the boots when flying
     const jet = new T.Mesh(new T.CircleGeometry(.55, 32), M.jet); jet.rotation.x = -Math.PI / 2; jet.position.y = -.05; body.add(jet);
-    Object.assign(R, { root, body, neck, head, face, eyes, smile, flat, open, bulb, halo, jet, M });
+    Object.assign(R, { root, body, torso, neck, head, face, eyes, smile, flat, open, bulb, halo, jet, ant, M });
     return R;
   }
+
+  // ---------- feelings: eyebrows (height, tilt), eye opening, smile (-1 frown .. 1 big smile), blush ----------
+  const EMO = {
+    neutral: [0, 0, 1, .55, .35], happy: [.03, -.05, 1, 1, .6], excited: [.07, -.12, 1.12, 1, .75], proud: [.02, -.18, .92, .85, .55],
+    gentle: [.02, .12, .86, .7, .6], thinking: [.04, -.3, .9, .1, .3], concerned: [.03, .45, 1, -.35, .2], surprised: [.09, .05, 1.2, .2, .45],
+    sad: [-.01, .55, .85, -.6, .15], calm: [0, .05, .84, .5, .4], listening: [.05, .1, 1.05, .35, .35],
+  };
+  const ACT_EMO = { wave: "happy", highfive: "excited", thumbs: "proud", love: "gentle", celebrate: "excited", think: "thinking", listen: "listening",
+    shake: "concerned", nod: "happy", fly: "excited", hover: "happy", handshake: "happy", popup: "excited", assign: "proud", work: "thinking", scan: "thinking" };
 
   // ---------- poses ----------
   const A = (side, fwd, bend, ez) => ({ side, fwd, bend: bend || 0, ez: ez || 0 });
@@ -118,14 +154,15 @@
     const p = {
       y: s(t * 2.2) * .015, face: o.facing || 0, lean: 0, pitch: 0, nod: 0, turn: 0, tilt: .1 + s(t * 1.3) * .045,
       L: A(9 + s(t * 1.6) * 3, 2, 10), R: A(9 - s(t * 1.6) * 3, 2, 10), legs: [0, 0], hands: { L: "mitt", R: "mitt" },
-      eyes: "open", mouth: "smile", open: 0, jet: 0, look: o.look || [0, 0]
+      eyes: "open", mouth: "smile", open: 0, jet: 0, look: o.look || [0, 0], knees: [4, 4], breath: s(t * 2.2)
     };
     const w = t * 7;
     switch (act) {
       case "walk": p.L = A(8, s(w) * 32, 18); p.R = A(8, -s(w) * 32, 18); p.legs = [-s(w) * 30, s(w) * 30];
+        p.knees = [8 + Math.max(0, s(w)) * 48, 8 + Math.max(0, -s(w)) * 48];
         p.y = Math.abs(c(w)) * .06; p.tilt = .04; p.lean = 0; break;
       case "fly": case "hover": p.L = A(68, -22, 12); p.R = A(68, -22, 12); p.pitch = act === "fly" ? .22 : .06;
-        p.legs = [-14, -8]; p.y = .12 + s(t * 2.2) * .06; p.jet = .75 + s(t * 14) * .15; p.eyes = "happy"; p.tilt = .04; break;
+        p.legs = [-14, -8]; p.knees = [24 + s(t * 2.2) * 6, 34 - s(t * 2.2) * 6]; p.y = .12 + s(t * 2.2) * .06; p.jet = .75 + s(t * 14) * .15; p.eyes = "happy"; p.tilt = .04; break;
       case "popup": { const k = Math.min(1, t / .8), e = 1 + 2.7 * Math.pow(k - 1, 3) + 1.7 * Math.pow(k - 1, 2);
         p.y = -4.5 * (1 - e); if (t > .8) { p.L = A(128, 34, 0, 18 + s(t * 9) * 28); p.hands.L = "open"; p.eyes = "happy"; } break; }
       case "wave": p.L = A(128, 34, 0, 18 + s(t * 9) * 28); p.hands.L = "open"; p.eyes = "happy"; p.tilt = -.08; break;
@@ -135,7 +172,7 @@
       case "handshake": p.R = A(16, 62 + s(t * 10) * 7, 8); p.hands.R = "open"; p.tilt = .1; break;
       case "love": p.L = A(-36, 46, 102); p.R = A(-36, 46, 102); p.eyes = "happy"; p.tilt = .12 + s(t * 1.5) * .06; p.nod = .06; break;
       case "celebrate": { const j = Math.abs(s(t * 5)); p.L = A(152, 6, 0, -12 + s(t * 10) * 10); p.R = A(152, 6, 0, -12 - s(t * 10) * 10);
-        p.hands.L = p.hands.R = "open"; p.y = j * .38; p.legs = [j * 18, j * 18]; p.eyes = "happy"; p.mouth = "open"; p.open = 1; break; }
+        p.hands.L = p.hands.R = "open"; p.y = j * .38; p.legs = [j * 18, j * 18]; p.knees = [8 + j * 50, 8 + j * 50]; p.eyes = "happy"; p.mouth = "open"; p.open = 1; break; }
       case "nod": p.nod = Math.max(0, s(t * 7)) * .26; p.eyes = "happy"; break;
       case "shake": p.turn = s(t * 10) * .35; p.tilt = s(t * 10) * .06; p.mouth = "flat"; break;
       case "listen": p.R = A(122, 4, 8, 100); p.hands.R = "open"; p.tilt = -.16; p.mouth = "o"; p.open = .55; break;
@@ -144,13 +181,18 @@
         p.hands.L = p.hands.R = "open"; p.mouth = "talk"; p.open = .25 + Math.abs(s(t * 13)) * .75; break;
       case "carry": case "carrywalk":                       // holding a parcel / book / card in front
         p.L = A(-16, 64, 36); p.R = A(-16, 64, 36); p.eyes = "happy";
-        if (act === "carrywalk") { p.legs = [-s(w) * 28, s(w) * 28]; p.y = Math.abs(c(w)) * .05; } break;
+        if (act === "carrywalk") { p.legs = [-s(w) * 28, s(w) * 28]; p.knees = [8 + Math.max(0, s(w)) * 42, 8 + Math.max(0, -s(w)) * 42]; p.y = Math.abs(c(w)) * .05; } break;
       case "work": p.L = A(12, 48 + s(t * 9) * 9, 52); p.R = A(12, 48 - s(t * 9) * 9, 52); p.nod = .12; p.mouth = "flat"; break;
       case "point": p.R = A(84, 28, 6, 0); p.hands.R = "open"; p.mouth = "talk"; p.open = .25 + Math.abs(s(t * 11)) * .6; p.tilt = -.06; break;
       case "scan": p.turn = s(t * 1.6) * .55; p.R = A(120, 30, 0, 95); p.hands.R = "open"; p.eyes = "open"; break;
       case "assign": { const u = t % 1.6;                      // tosses a task to another agent
         if (u < .5) p.R = A(58, -40, 70); else { p.R = A(38, 82, 0); p.hands.R = "open"; } p.eyes = "happy"; p.tilt = .08; break; }
     }
+    const e = EMO[o.emo] || EMO[ACT_EMO[act]] || EMO.neutral;
+    [p.browY, p.browTilt, p.eyeOpen, p.smile, p.blush] = e;
+    if ((o.emo === "excited" || o.emo === "proud") && p.eyes === "open" && act !== "think") p.eyes = "happy";
+    if (o.emo === "concerned" || o.emo === "sad") { if (p.eyes === "happy") p.eyes = "open"; if (p.mouth === "smile") p.mouth = "curve"; }
+    if (p.mouth === "smile") p.mouth = "curve";
     if (o.blink != null) p.blink = o.blink;
     if (o.talking && act !== "talk") { p.mouth = "talk"; p.open = .25 + Math.abs(s(t * 13)) * .75; }
     return p;
@@ -184,15 +226,27 @@
       else { a.thumb.position.set(-.04 * k, -.01, .15); a.thumb.rotation.set(.5, 0, 0); a.thumb.scale.set(1, 1.5, 1); }
     });
     R.legs.forEach((h, i) => { h.rotation.x = -p.legs[i] * D; });
+    if (R.knees && p.knees) R.knees.forEach((k, i) => { k.rotation.x = p.knees[i] * D; });
+    if (R.torso) R.torso.scale.set(1 + (p.breath || 0) * .008, 1 + (p.breath || 0) * .014, 1 + (p.breath || 0) * .008);
+    // springy antenna: it lags behind when LDF moves, then wobbles back
+    if (R.spring) { const S = R.spring, push = (p.y - S.py) * 9 + (p.tilt - S.pt) * 3 + (p.turn || 0) * .4;
+      S.py = p.y; S.pt = p.tilt; S.v += (-push * .35 - S.a) * .18; S.v *= .82; S.a += S.v; S.a = Math.max(-.6, Math.min(.6, S.a));
+      R.ant.rotation.z = S.a * .9; R.ant.rotation.x = S.a * .35; }
     const blink = p.eyes === "open" && (p.blink != null ? p.blink : (performance.now() % 4100) < 120);
     ["L", "R"].forEach(n => {
       const e = R.eyes[n], happy = p.eyes === "happy";
       e.ball.visible = e.hi1.visible = e.hi2.visible = !happy; e.happy.visible = happy;
-      e.ball.scale.y = blink ? .02 : .225; e.hi1.visible = e.hi2.visible = !happy && !blink;
+      const open = p.eyeOpen == null ? 1 : p.eyeOpen;
+      e.ball.scale.y = blink ? .02 : .225 * open; e.ball.scale.x = .185 * (open > 1 ? open : 1); e.hi1.visible = e.hi2.visible = !happy && !blink;
+      if (e.brow) { e.brow.position.y = (p.browY || 0) * 1.2;
+        e.brow.rotation.z = Math.PI / 2 - .75 + e.k * (p.browTilt || 0) * -.9; }
+      if (e.cheek) e.cheek.material.opacity = .25 + (p.blush || 0) * .45;
       const up = p.eyes === "up" ? .05 : 0; e.ball.position.y = up; e.hi1.position.y = .07 + up; e.hi2.position.y = -.07 + up;
     });
     const talkish = p.mouth === "talk" || p.mouth === "o" || p.mouth === "open";
-    R.smile.visible = p.mouth === "smile"; R.flat.visible = p.mouth === "flat"; R.open.visible = talkish;
+    const curve = p.mouth === "curve" || p.mouth === "smile", sm = p.smile == null ? .7 : p.smile;
+    R.smile.visible = curve && Math.abs(sm) > .12; R.flat.visible = p.mouth === "flat" || (curve && Math.abs(sm) <= .12); R.open.visible = talkish;
+    if (R.smile.visible) { R.smile.scale.set(.85 + Math.abs(sm) * .25, Math.sign(sm) * (.35 + Math.abs(sm) * .75), 1); R.smile.position.y = sm < 0 ? -.03 : 0; }
     R.open.scale.set(p.mouth === "open" ? .1 : .075, .02 + .07 * p.open, .03);
     R.M.jet.opacity = p.jet * .45; R.jet.scale.setScalar(.8 + p.jet * .3);
     const pulse = 1 + Math.max(0, s(t * 4)) * .12; R.bulb.scale.setScalar(pulse); R.halo.scale.setScalar(pulse * (1 + Math.max(0, s(t * 4)) * .2));
@@ -240,7 +294,7 @@
     const ground = new T.Mesh(new T.PlaneGeometry(8, 8), new T.ShadowMaterial({ opacity: opts.shadowOpacity == null ? .28 : opts.shadowOpacity }));
     ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; ground.visible = opts.ground !== false; scene.add(ground);
     const R = build(); scene.add(R.root);
-    const st = { act: "idle", t0: performance.now(), facing: 0, talking: false, look: [0, 0], cur: null, colour: "#2cc3d6" };
+    const st = { act: "idle", t0: performance.now(), facing: 0, talking: false, look: [0, 0], cur: null, colour: "#2cc3d6", emo: null, mouth: 0, mouthAt: 0, env: null };
 
     function lerp(a, b, k) { return a + (b - a) * k; }
     function mix(cur, tgt, k) {
@@ -266,6 +320,12 @@
       st.cur = mix(st.cur, tgt, opts.smooth == null ? .22 : opts.smooth);
       for (const key in tgt) if (typeof tgt[key] === "string" || (tgt[key] && typeof tgt[key] === "object" && !("side" in tgt[key]) && !Array.isArray(tgt[key]))) st.cur[key] = tgt[key];
       st.cur.face = lerp(st.cur.face, st.facing, .12);
+      // lip-sync: a live loudness level, or a loudness track played against the clock
+      let lv = null;
+      if (st.env) { const i = Math.floor((now - st.env.t0) / 1000 * st.env.fps);
+        if (i >= 0 && i < st.env.v.length) lv = st.env.v[i]; else if (i >= st.env.v.length) st.env = null; }
+      if (lv == null && now - st.mouthAt < 220) lv = st.mouth;
+      if (lv != null) { st.cur.mouth = lv > .06 ? "talk" : "curve"; st.cur.open = Math.min(1, lv * 1.3); }
       apply(st.cur, t);
       renderer.render(scene, cam);
     }
@@ -282,7 +342,11 @@
     const api = {
       set(o) { if (o.act && o.act !== st.act) { st.act = o.act; st.t0 = performance.now(); }
         if (o.facing != null) st.facing = o.facing; if (o.talking != null) st.talking = o.talking;
-        if (o.look) st.look = o.look; if (o.colour && o.colour !== st.colour) setColour(o.colour); },
+        if (o.look) st.look = o.look; if (o.colour && o.colour !== st.colour) setColour(o.colour);
+        if (o.emo !== undefined) st.emo = o.emo;
+        if (o.mouth != null) { st.mouth = o.mouth; st.mouthAt = performance.now(); } },
+      // play a loudness track (numbers 0..1, fps per second) so the mouth follows real speech
+      lipSync(values, fps, startAt) { st.env = values && values.length ? { v: values, fps: fps || 30, t0: startAt == null ? performance.now() : startAt } : null; },
       size, frame, shot, headPos, setColour, renderer, scene, camera: cam, parts: R, state: st,
       start() { const loop = n => { frame(n); api.raf = requestAnimationFrame(loop); }; api.raf = requestAnimationFrame(loop); },
       stop() { cancelAnimationFrame(api.raf); }
