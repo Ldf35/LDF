@@ -14,6 +14,7 @@
     ['learning.html', 'Learning Hub'],
     ['tutors.html', 'Tutors'],
     ['app.html', 'LDF App'],
+    ['index.html#join', 'Join us'],
     ['contact.html', 'Contact']
   ];
 
@@ -134,6 +135,7 @@
 
           <div>
             <h2>Join in</h2>
+            ${link('index.html#join', 'Join our team')}
             <a href="${APP}#/join" target="_blank" rel="noopener noreferrer">Volunteer or partner</a>
             <a href="${APP}#/give" target="_blank" rel="noopener noreferrer">Give through LDF Hope</a>
             ${link('contact.html', 'Contact us')}
