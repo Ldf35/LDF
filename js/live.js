@@ -108,8 +108,15 @@
       wk.forEach((el) => {
         const sec = el.closest('[data-wk-section]');
         const list = rows.slice(0, Number(el.dataset.limit || 6));
-        if (!list.length) { if (sec) sec.hidden = true; return; }
-        el.innerHTML = list.map((w) => `<article class="card pj-card"><div class="pj-top"><span class="status ongoing">${w.tier === 'premium' ? 'Premium' : 'Free'}</span><span class="kind">${esc(w.language)}</span></div>
+        if (!list.length) {                                   // nothing scheduled yet: invite people in
+          const app = esc(cfg.appUrl || 'https://ldf-platform.vercel.app/');
+          el.innerHTML = [
+            ['New workshops are coming', 'Life skills, careers, study skills and wellbeing. Open the app to see them first.', 'workshops', 'See workshops'],
+            ['Share what you know', 'Teachers, professionals and partners can host a workshop. LDF checks every host.', 'workshops/host', 'Host a workshop'],
+            ['Ask for a topic', 'Tell us what your village, school or group wants to learn and we will try to arrange it.', '', 'Suggest a topic'],
+          ].map(([h, p, path, btn]) => `<article class="card"><h3>${h}</h3><p>${p}</p><a class="button button-secondary" href="${path ? app + '#/' + path : 'contact.html?topic=Learning%20Hub#contact-form'}"${path ? ' target="_blank" rel="noopener noreferrer"' : ''}>${btn}</a></article>`).join('');
+          if (sec) sec.hidden = false; return; }
+        el.innerHTML = list.map((w) => `<article class="card pj-card"><div class="pj-top"><span class="status ongoing">${w.tier === 'premium' ? 'Premium' : (w.tier === 'pwyc' ? 'Pay what you can' : 'Free')}</span><span class="kind">${esc(w.language)}</span></div>
           <h3>${esc(w.title)}</h3><p class="muted">${esc(fmt(w.starts_at))} · ${Number(w.duration_min)} min · hosted by ${esc(w.host_name)}</p>
           <p>${esc(String(w.about).slice(0, 160))}${String(w.about).length > 160 ? '…' : ''}</p>
           <a class="button button-secondary" href="${esc((cfg.appUrl || '') + '#/workshops')}" target="_blank" rel="noopener noreferrer">Join in the app</a></article>`).join('');
