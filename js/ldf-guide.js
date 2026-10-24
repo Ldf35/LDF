@@ -63,7 +63,7 @@
   let loading = null;
   const load3d = () => loading || (loading = (async () => {
     if (!window.THREE) await script('vendor/three.min.js');
-    if (!window.LDF3D) await script('js/ldf3d.js');
+    if (!window.LDF3D) await script('js/ldf3d.js?v=2');
   })());
 
   // ---------- the guide ----------
