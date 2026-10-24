@@ -496,5 +496,11 @@
 
   
 
+<script>
+  (function () {                       // contact.html?topic=Partnership picks the topic for you
+    var t = new URLSearchParams(location.search).get("topic"), sel = document.getElementById("topic");
+    if (t && sel) for (var i = 0; i < sel.options.length; i++) if (sel.options[i].value === t) sel.selectedIndex = i;
+  })();
+</script>
 </body>
 </html>
