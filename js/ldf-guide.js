@@ -18,6 +18,8 @@
     'Give what you can, find what you need.': ['LDF Market! Buy from local shops, or give things you no longer need. Our district team checks every free item.', 'celebrate', '#f59e0b'],
     'New in LDF Market': ['These items are live in the app right now. Tap one to see it.', 'point', '#f59e0b'],
     'Sell with LDF': ['Shops can join for free. LDF takes 10% of each sale, once a month.', 'handshake', '#f59e0b'],
+    'Batches we are finishing together': ['Each batch needs the food from donors and the programme day from sponsors. Tap one to help finish it!', 'celebrate', '#8cae26'],
+    'Who finishes a Hope batch?': ['Donors, sponsors, shops and volunteers. LDF is only the platform; you do the work together.', 'love', '#a78bfa'],
     'Partner with LDF': ['Companies can sponsor a programme day, free tutoring, Hope packages or courses. Every rupee is tracked openly in the app.', 'handshake', '#f59e0b'],
     'Sponsor a programme day': ['A day sponsor pays for the team who deliver: travel, meals and fair pay. Up to 3 sponsors can share one day.', 'handshake', '#f59e0b'],
     'Our supporters': ['These are the companies, shops and people who stand with LDF. Thank you!', 'celebrate', '#ec4899'],
