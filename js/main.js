@@ -11,6 +11,7 @@
     ['about.html', 'About us'],
     ['projects.html', 'What we do'],
     ['hope.html', 'Hope for Families'],
+    ['market.html', 'LDF Market'],
     ['learning.html', 'Learning Hub'],
     ['tutors.html', 'Tutors'],
     ['app.html', 'LDF App'],

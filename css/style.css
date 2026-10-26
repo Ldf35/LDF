@@ -1157,3 +1157,9 @@ select {
 .join-card { border-top: 5px solid var(--jc, #8e3a9f); display: flex; flex-direction: column; gap: 6px; }
 .join-card .join-dot { width: 34px; height: 34px; border-radius: 50%; background: var(--jc); box-shadow: 0 0 0 6px color-mix(in srgb, var(--jc) 18%, transparent); }
 .join-card .button { margin-top: auto; align-self: flex-start; }
+
+/* LDF Market cards on the website */
+.mk-site { display: block; text-decoration: none; color: inherit; transition: transform .15s; }
+.mk-site:hover { transform: translateY(-2px); }
+.mk-site img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 12px; margin-bottom: 8px; }
+.mk-free { color: #3d7a12; }
