@@ -109,6 +109,39 @@
       }).catch(() => { el.innerHTML = ''; });
     });
 
+    // Help from abroad: what a gift does, converted into the visitor's currency (an estimate from LDF's latest rates)
+    const abroadEls = document.querySelectorAll('[data-live="abroad"]');
+    if (abroadEls.length) {
+      Promise.all([rpc('public_rates').catch(() => ({})), rpc('open_batches_public').catch(() => [])]).then(([rates, batches]) => {
+        const SYM = { USD: '$', GBP: '£', EUR: '€', AUD: 'A$', CAD: 'C$', AED: 'AED ', SAR: 'SAR ', SGD: 'S$', JPY: '¥' };
+        const curs = Object.keys(rates).filter((c) => SYM[c]);
+        if (!curs.length) { abroadEls.forEach((el) => { el.innerHTML = ''; }); return; }
+        let tz = ''; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) { /* old browser */ }
+        const guess = tz === 'Europe/London' ? 'GBP' : /^Australia\//.test(tz) ? 'AUD' : /^America\/(Toronto|Vancouver|Edmonton|Winnipeg|Halifax|Montreal)/.test(tz) ? 'CAD'
+          : /^America/.test(tz) ? 'USD' : /^Europe\//.test(tz) ? 'EUR' : tz === 'Asia/Dubai' ? 'AED' : tz === 'Asia/Riyadh' ? 'SAR' : tz === 'Asia/Singapore' ? 'SGD' : tz === 'Asia/Tokyo' ? 'JPY' : 'USD';
+        let saved = null; try { saved = localStorage.getItem('ldf.site.cur'); } catch (e) { /* private mode */ }
+        let cur = curs.includes(saved) ? saved : curs.includes(guess) ? guess : curs[0];
+        const pkg = batches[0] ? Number(batches[0].package_cost) : 6420, day = batches[0] ? Number(batches[0].day_goal || 25000) : 25000;
+        const rs = (n) => 'Rs ' + Math.round(n).toLocaleString('en-GB');
+        const conv = (n) => { const v = n / Number(rates[cur].lkr); return '≈ ' + SYM[cur] + (v >= 100 ? Math.round(v).toLocaleString('en-GB') : v.toLocaleString('en-GB', { maximumFractionDigits: v < 10 ? 2 : 0 })); };
+        const draw = (el) => {
+          const compact = el.dataset.compact === '1';
+          const tile = (label, n) => `<article class="card center"><p class="where">${label}</p><h3 style="margin:4px 0">${conv(n)}</h3><p class="small muted">${rs(n)}</p></article>`;
+          const asOf = rates[cur].as_of ? new Date(rates[cur].as_of).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+          el.innerHTML = `<p class="center"><label class="small"><b>Show amounts in</b> <select data-abroad-cur style="width:auto;display:inline-block">${curs.map((c) => `<option ${c === cur ? 'selected' : ''}>${c}</option>`).join('')}</select></label></p>
+            <div class="card-grid three">${tile('Food for one family', pkg)}${tile('One programme day', day)}${tile('A whole village (20 families)', pkg * 20 + day)}</div>
+            ${!compact && batches.length ? `<div class="card-grid three" style="margin-top:16px">${batches.slice(0, 3).map((b) => {
+              const nf = Math.max(0, Number(b.target) - Number(b.raised)), nd = Math.max(0, Number(b.day_goal || 0) - Number(b.day_sponsored || 0) - Number(b.day_pledged || 0));
+              return `<article class="card"><p class="where">${esc([b.village, b.district].filter(Boolean).join(', '))}</p><h3>${esc(b.title || b.village)}</h3>
+                <p class="small">${nf ? `Food still needs <b>${conv(nf)}</b>` : 'Food ✓'} · ${nd ? `Day still needs <b>${conv(nd)}</b>` : 'Programme day ✓'}</p>
+                <a class="button button-secondary" href="${esc(cfg.appUrl || 'https://ldf-platform.vercel.app/')}#/give/${esc(b.batch_id)}" target="_blank" rel="noopener noreferrer">Help finish it</a></article>`; }).join('')}</div>` : ''}
+            <p class="center small muted">Estimates using LDF’s rate from ${asOf}. Your bank decides the exact amount.</p>`;
+          el.querySelector('[data-abroad-cur]').addEventListener('change', (ev) => { cur = ev.target.value; try { localStorage.setItem('ldf.site.cur', cur); } catch (e) { /* private mode */ } abroadEls.forEach(draw); });
+        };
+        abroadEls.forEach(draw);
+      });
+    }
+
     // LDF Hope: open batches with both goals (food from donors, programme day from sponsors)
     document.querySelectorAll('[data-live="hope-open"]').forEach((el) => {
       rpc('open_batches_public').then((rows) => {
