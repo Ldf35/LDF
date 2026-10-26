@@ -13,6 +13,8 @@
     'Our idea': ['Our idea in four points. Every person has value, and help always comes with dignity.', 'love', '#a78bfa'],
     'Progress Begins with People.': ['Everything we do starts with people: support for families, learning, and taking part in the community.', 'talk', '#22c3dd'],
     'There is a place for you at LDF.': ['Join us! Be a Coach, a counsellor, a volunteer, a workshop host, a partner, or part of our team.', 'celebrate', '#ec4899'],
+    'Nobody should have to choose between dinner and learning.': ['This is why we do it this way: learning stays free, everyone gives what they can, and the people who help are treated fairly.', 'love', '#a78bfa'],
+    'Because someone once taught us too': ['Our courses are free because we never want money to stop anyone from learning.', 'love', '#2fc3d4'],
     'Partner with LDF': ['Companies can sponsor a programme day, free tutoring, Hope packages or courses. Every rupee is tracked openly in the app.', 'handshake', '#f59e0b'],
     'Sponsor a programme day': ['A day sponsor pays for the team who deliver: travel, meals and fair pay. Up to 3 sponsors can share one day.', 'handshake', '#f59e0b'],
     'Our supporters': ['These are the companies, shops and people who stand with LDF. Thank you!', 'celebrate', '#ec4899'],
