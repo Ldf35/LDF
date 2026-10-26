@@ -12,6 +12,7 @@
     ['projects.html', 'What we do'],
     ['hope.html', 'Hope for Families'],
     ['market.html', 'LDF Market'],
+    ['abroad.html', 'From abroad'],
     ['learning.html', 'Learning Hub'],
     ['tutors.html', 'Tutors'],
     ['app.html', 'LDF App'],
