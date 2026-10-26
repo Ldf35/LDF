@@ -92,6 +92,28 @@
       }).catch(() => stats.forEach((el) => { el.innerHTML = ''; }));
     }
 
+    // supporters: day sponsors (only those who agreed to be shown), partner companies and shops
+    const sup = document.querySelectorAll('[data-live="supporters"]');
+    if (sup.length) {
+      Promise.all([rpc('supporters_wall').catch(() => null), rpc('home_showcase').catch(() => null)]).then(([w, sc]) => {
+        const items = [];
+        ((w && w.day_sponsors) || []).forEach((x) => items.push([x.name, `Sponsored ${Number(x.days)} programme day${Number(x.days) === 1 ? '' : 's'}`]));
+        ((sc && sc.partners) || []).forEach((x) => items.push([x.name, 'Partner']));
+        ((sc && sc.donor_orgs) || []).forEach((x) => items.push([x.name, 'Gave to LDF Hope']));
+        ((w && w.workshop_orgs) || []).forEach((x) => items.push([x.name, 'Sponsors workshop places']));
+        ((sc && sc.shops) || []).forEach((x) => items.push([x.name, x.certified ? 'LDF Certified Shop' : 'Partner shop']));
+        const seen = new Map();
+        items.forEach(([n, what]) => { const k = String(n || '').trim().toLowerCase(); if (!k) return; const o = seen.get(k) || { n, w: [] }; if (!o.w.includes(what)) o.w.push(what); seen.set(k, o); });
+        const list = [...seen.values()].slice(0, 24);
+        const tot = (w && w.day_totals) || {};
+        sup.forEach((el) => {
+          el.innerHTML = list.length
+            ? `${Number(tot.days) > 0 ? `<p class="center small">${Number(tot.days)} programme day${Number(tot.days) === 1 ? '' : 's'} sponsored so far, reaching ${Number(tot.families).toLocaleString('en-GB')} families.</p>` : ''}<div class="card-grid three">${list.map((o) => `<article class="card"><h3>${esc(o.n)}</h3><ul class="tags">${o.w.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></article>`).join('')}</div>`
+            : '<p class="muted center">Our first sponsors and partners will be thanked here. Could it be you?</p>';
+        });
+      });
+    }
+
     // coaches
     document.querySelectorAll('[data-live="coaches"]').forEach((el) => {
       rpc('public_coaches').then((cs) => {
