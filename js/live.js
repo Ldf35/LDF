@@ -92,6 +92,23 @@
       }).catch(() => stats.forEach((el) => { el.innerHTML = ''; }));
     }
 
+    // LDF Market: newest live items (sale and free); clicking opens the item in the app
+    document.querySelectorAll('[data-live="market"]').forEach((el) => {
+      rpc('market_browse', { p_kind: null, p_category: null, p_district: null, p_q: null, p_limit: Number(el.dataset.limit || 6), p_offset: 0 }).then((items) => {
+        const app = cfg.appUrl || 'https://ldf-platform.vercel.app/';
+        const pic = (p) => (p ? `${API.url}/storage/v1/object/public/market/${String(p).split('/').map(encodeURIComponent).join('/')}` : '');
+        const price = (i) => (i.kind === 'free' ? '<b class="mk-free">Free</b>' : `<b>Rs ${Number(i.price).toLocaleString('en-GB')}</b>`);
+        el.innerHTML = items.length ? items.map((i) => `<a class="card pj-card mk-site" href="${esc(app)}#/market/item/${esc(i.id)}" target="_blank" rel="noopener noreferrer">
+          ${i.photo ? `<img src="${esc(pic(i.photo))}" alt="${esc(i.title)}" loading="lazy">` : ''}
+          <div class="pj-top"><span class="status ${i.kind === 'free' ? '' : 'ongoing'}">${i.kind === 'free' ? 'Free item' : 'For sale'}</span><span class="kind">${esc(i.district || '')}</span></div>
+          <h3>${esc(i.title)}</h3><p>${price(i)}</p>
+          <p class="where">${i.kind === 'free' ? 'Given by an LDF member, checked by the district team' : esc(i.shop || '') + (i.certified ? ' ✔' : '')}</p></a>`).join('')
+          : `<article class="card"><h3>The first shops are joining now</h3><p>Be one of the first to give a free item or bring your shop to LDF Market.</p><a class="button button-secondary" href="${esc(app)}#/market/give" target="_blank" rel="noopener noreferrer">Give a free item</a></article>
+             <article class="card"><h3>Shops: sell with LDF</h3><p>Free to join. You deliver, the buyer pays you, and LDF takes 10% once a month.</p><a class="button button-secondary" href="market.html#sell">How it works</a></article>
+             <article class="card"><h3>Checked by people you know</h3><p>Your district team checks every free item before it appears, so it is clean, safe and useful.</p><a class="button button-secondary" href="market.html">Learn more</a></article>`;
+      }).catch(() => { el.innerHTML = ''; });
+    });
+
     // supporters: day sponsors (only those who agreed to be shown), partner companies and shops
     const sup = document.querySelectorAll('[data-live="supporters"]');
     if (sup.length) {
@@ -167,7 +184,7 @@
       if (!form.reportValidity()) return;
       const status = document.getElementById('form-message'), btn = form.querySelector('button[type=submit]');
       const d = new FormData(form);
-      const topicMap = { 'general enquiry': 'general', 'hope project': 'donate', 'learning hub': 'learn', 'volunteering': 'volunteer', 'careers': 'volunteer', 'partnership': 'partner', 'hope shop partner': 'partner' };
+      const topicMap = { 'general enquiry': 'general', 'hope project': 'donate', 'learning hub': 'learn', 'volunteering': 'volunteer', 'careers': 'volunteer', 'partnership': 'partner', 'hope shop partner': 'partner', 'ldf market shop': 'partner' };
       btn.disabled = true; status.textContent = 'Sending…';
       try {
         await rpc('submit_contact', { p_name: String(d.get('name') || '').trim(), p_email: String(d.get('email') || '').trim(), p_topic: topicMap[String(d.get('topic') || '').toLowerCase()] || 'general',
