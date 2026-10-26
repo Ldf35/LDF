@@ -109,6 +109,26 @@
       }).catch(() => { el.innerHTML = ''; });
     });
 
+    // LDF Hope: open batches with both goals (food from donors, programme day from sponsors)
+    document.querySelectorAll('[data-live="hope-open"]').forEach((el) => {
+      rpc('open_batches_public').then((rows) => {
+        const app = cfg.appUrl || 'https://ldf-platform.vercel.app/';
+        const rs = (n) => 'Rs ' + Math.round(Number(n || 0)).toLocaleString('en-GB');
+        const bar = (a, b, col) => `<div style="height:10px;border-radius:99px;background:#eee6f2;overflow:hidden;margin:4px 0"><span style="display:block;height:100%;width:${b > 0 ? Math.min(100, Math.round((a / b) * 100)) : 0}%;background:${col}"></span></div>`;
+        el.innerHTML = rows.length ? rows.slice(0, 6).map((b) => {
+          const food = Number(b.raised) >= Number(b.target), day = Number(b.day_sponsored) >= Number(b.day_goal);
+          const need = food && !day ? 'The food is funded. Now the programme day needs a sponsor.' : !food && day ? 'The day is covered. Now the food needs donors.' : 'Needs donors for the food and sponsors for the day.';
+          return `<article class="card"><p class="where">${esc([b.village, b.district].filter(Boolean).join(', '))} · ${Number(b.packages)} families</p><h3>${esc(b.title || b.village)}</h3>
+            <p class="small"><b>Food${food ? ' ✓' : ''}</b> · ${rs(b.raised)} of ${rs(b.target)}</p>${bar(Number(b.raised), Number(b.target), 'linear-gradient(90deg,#8cae26,#3d7a12)')}
+            <p class="small"><b>Programme day${day ? ' ✓' : ''}</b> · ${rs(b.day_sponsored)} of ${rs(b.day_goal)}</p>${bar(Number(b.day_sponsored), Number(b.day_goal), 'linear-gradient(90deg,#f5b301,#ec4899)')}
+            <p class="small" style="color:#b0246b;font-weight:600">${need}</p>
+            <a class="button button-secondary" href="${esc(app)}#/give/${esc(b.batch_id)}" target="_blank" rel="noopener noreferrer">Help finish it</a></article>`;
+        }).join('') : `<article class="card"><h3>The next batch is being prepared</h3><p>Our district teams are choosing the next village fairly. When it opens, donors and sponsors can finish it together.</p><a class="button button-secondary" href="${esc(app)}#/give" target="_blank" rel="noopener noreferrer">Open LDF Hope</a></article>
+           <article class="card"><h3>Sponsor a programme day</h3><p>Companies can cover the day for the team who deliver. It is the most needed help right now.</p><a class="button button-secondary" href="hope.html#sponsor-a-day">How it works</a></article>
+           <article class="card"><h3>Shops: become a Hope partner</h3><p>Pack food for families at a fair price and show the LDF Hope partner badge in LDF Market.</p><a class="button button-secondary" href="contact.html?topic=HOPE%20shop%20partner#contact-form">Talk to us</a></article>`;
+      }).catch(() => { el.innerHTML = ''; });
+    });
+
     // supporters: day sponsors (only those who agreed to be shown), partner companies and shops
     const sup = document.querySelectorAll('[data-live="supporters"]');
     if (sup.length) {
