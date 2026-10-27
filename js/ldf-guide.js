@@ -22,6 +22,7 @@
     'Who finishes a Hope batch?': ['Donors, sponsors, shops and volunteers. LDF is only the platform; you do the work together.', 'love', '#a78bfa'],
     'Far from home, still part of it.': ['Living abroad? You can still help your home village. Choose your currency to see what your gift does!', 'wave', '#2453d6'],
     'Help home from anywhere in the world': ['Welcome! Here is how Sri Lankans abroad help their home villages through LDF.', 'wave', '#2453d6'],
+    'Stories from our work': ['Every story here is true. Tap a topic to filter them. Members choose whether their name is shown.', 'love', '#ec4899'],
     'Partner with LDF': ['Companies can sponsor a programme day, free tutoring, Hope packages or courses. Every rupee is tracked openly in the app.', 'handshake', '#f59e0b'],
     'Sponsor a programme day': ['A day sponsor pays for the team who deliver: travel, meals and fair pay. Up to 3 sponsors can share one day.', 'handshake', '#f59e0b'],
     'Our supporters': ['These are the companies, shops and people who stand with LDF. Thank you!', 'celebrate', '#ec4899'],

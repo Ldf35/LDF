@@ -15,10 +15,14 @@
     ['abroad.html', 'From abroad'],
     ['learning.html', 'Learning Hub'],
     ['tutors.html', 'Tutors'],
+    ['stories.html', 'Stories'],
     ['app.html', 'LDF App'],
     ['index.html#join', 'Join us'],
     ['contact.html', 'Contact']
   ];
+
+  // on wide screens these sit under "More" so the menu fits on one line
+  const MORE = new Set(['market.html', 'abroad.html', 'tutors.html', 'app.html']);
 
   const APP = config.appUrl || 'https://ldf-platform.vercel.app/';
 
@@ -65,7 +69,9 @@
             class="primary-nav"
             aria-label="Main navigation"
           >
-            ${nav.map(([href, label]) => link(href, label)).join('')}
+            ${nav.filter(([h]) => !MORE.has(h)).map(([href, label]) => link(href, label, href === 'index.html' ? 'nav-home' : '')).join('')}
+            <details class="nav-more"><summary>More</summary><div class="nav-more-list">${nav.filter(([h]) => MORE.has(h)).map(([href, label]) => link(href, label)).join('')}</div></details>
+            ${nav.filter(([h]) => MORE.has(h)).map(([href, label]) => link(href, label, 'nav-mobile-only')).join('')}
 
             <a class="nav-cta" href="${APP}" target="_blank" rel="noopener noreferrer">Open the app</a>
           </nav>
@@ -131,6 +137,7 @@
             ${link('hope.html', 'Hope for Families')}
             ${link('learning.html', 'Learning Hub')}
             ${link('tutors.html', 'Tutors')}
+            ${link('stories.html', 'Real stories')}
             ${link('gallery.html', 'Photo gallery')}
             ${link('app.html', 'The LDF app')}
           </div>
@@ -259,4 +266,7 @@
   guide.src = 'js/ldf-guide.js';
   guide.defer = true;
   document.body.appendChild(guide);
+  document.addEventListener('click', (e) => {
+    document.querySelectorAll('.nav-more[open]').forEach((d) => { if (!d.contains(e.target)) d.removeAttribute('open'); });
+  });
 })();

@@ -1172,3 +1172,28 @@ select {
 .together-live .stat { flex: 1 1 140px; max-width: 220px; padding: 14px 10px; }
 .together-live .stat b { font-size: clamp(26px, 4vw, 40px); }
 .together-live .muted { flex-basis: 100%; }
+
+/* Stories page */
+.st-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; }
+.st-filters button { font: inherit; font-size: 15px; font-weight: 600; padding: 7px 14px; border-radius: 99px; border: 1px solid #d9cbe6; background: #fff; color: var(--purple, #4b1d7a); cursor: pointer; }
+.st-filters button.on { background: var(--purple, #4b1d7a); border-color: var(--purple, #4b1d7a); color: #fff; }
+.st-filters button:focus-visible { outline: 3px solid #f5b301; outline-offset: 2px; }
+.st-card { display: flex; flex-direction: column; gap: 6px; }
+.st-card h3 { margin: 6px 0 0; color: var(--blue); }
+.st-card .where { color: var(--muted); font-size: 14px; margin: 0; }
+.st-card .text-link { margin-top: auto; }
+.status.story { background: #f6e3f7; color: #7b2a8e; }
+
+/* Menu: extra pages under "More" on wide screens */
+.nav-more { position: relative; }
+.nav-more summary { list-style: none; cursor: pointer; font-size: .88rem; font-weight: 650; color: #344057; white-space: nowrap; }
+.nav-more summary::-webkit-details-marker { display: none; }
+.nav-more summary::after { content: " ▾"; font-size: .75em; }
+.nav-more summary:focus-visible { outline: 3px solid #f5b301; outline-offset: 3px; border-radius: 6px; }
+.nav-more-list { position: absolute; right: 0; top: calc(100% + 14px); background: #fff; border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 16px 30px rgba(0, 30, 80, .12); padding: 8px; display: grid; min-width: 200px; z-index: 60; }
+.nav-more-list a { padding: 10px 12px; border-radius: 10px; }
+.nav-more-list a:hover { background: #f6f0fb; }
+.primary-nav .nav-mobile-only { display: none; }
+@media (min-width: 781px) { .primary-nav .nav-home { display: none; } }
+@media (max-width: 780px) { .nav-more { display: none; } .primary-nav .nav-mobile-only { display: block; } }
+@media (min-width: 781px) and (max-width: 1000px) { .primary-nav .nav-cta { display: none; } .brand small { display: none; } .primary-nav { gap: 10px; } }

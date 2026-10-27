@@ -229,6 +229,57 @@
       });
     }
 
+    // stories: programmes that happened + members' published life stories (adults only), with topic filters
+    const stEl = document.querySelector('[data-live="stories"]');
+    if (stEl) {
+      const app = cfg.appUrl || 'https://ldf-platform.vercel.app/';
+      const [progs, lives] = await Promise.all([
+        rpc('public_programmes').catch(() => []),
+        rpc('stories_list', { p_topic: null, p_limit: 40, p_before: null }).catch(() => []),
+      ]);
+      const TOPIC = { motivation: 'Motivation', problems: 'Hard times', study: 'Study', work: 'Work', family: 'Family', health: 'Health', money: 'Money', other: 'Life' };
+      const items = [
+        ...(progs || []).filter((p) => p.status === 'past' || p.status === 'ongoing').map((p) => ({
+          tags: ['Our programmes', ...(p.themes || [])], label: KINDS[p.kind] || 'Programme', status: p.status,
+          title: p.title, where: [p.place, p.district && p.district !== p.place ? p.district : ''].filter(Boolean).join(', '),
+          text: p.about || '', who: p.audience ? 'For: ' + p.audience : '', href: 'projects.html', ext: false, more: 'See the project' })),
+        ...(lives || []).map((s) => ({
+          tags: ["Members' stories", TOPIC[s.topic] || 'Life'], label: 'Life story', status: 'story',
+          title: s.title, where: s.author ? 'Shared by ' + s.author : 'Shared by an LDF member', text: s.excerpt || '',
+          who: s.minutes ? s.minutes + ' min read' : '', href: app + '#/story/' + s.id, ext: true, more: 'Read the full story' })),
+      ];
+      if (!items.length) { stEl.innerHTML = '<p class="muted">Stories will appear here soon.</p>'; }
+      else {
+        const draw = (tag) => {
+          stEl.innerHTML = items.filter((i) => tag === 'All' || i.tags.includes(tag)).map((i) => `<article class="card st-card">
+            <div class="pj-top"><span class="status ${i.status === 'story' ? 'story' : esc(i.status)}">${i.status === 'story' ? 'Life story' : (STATUS[i.status] || '')}</span><span class="kind">${esc(i.label)}</span></div>
+            <h3>${esc(i.title)}</h3>${i.where ? `<p class="where">${esc(i.where)}</p>` : ''}
+            <p>${esc(i.text.slice(0, 280))}${i.text.length > 280 ? '…' : ''}</p>${i.who ? `<p class="small muted">${esc(i.who)}</p>` : ''}
+            <a class="text-link" href="${esc(i.href)}"${i.ext ? ' target="_blank" rel="noopener noreferrer"' : ''}>${i.more} →</a></article>`).join('');
+        };
+        // a few clear topics instead of every small theme
+        const GROUP = {
+          'Learning': ['education', 'life skills', 'study', 'personal development', 'work', 'leadership'],
+          'Health and drug prevention': ['drug prevention', 'drug awareness', 'awareness', 'wellbeing', 'health', 'mental health'],
+          'Family': ['family', 'communication', 'teamwork', 'parents'],
+          'Strength and attitude': ['resilience', 'motivation', 'hard times', 'positive attitudes', 'attitudes', 'responsible choices', 'life'],
+        };
+        items.forEach((i) => { const low = i.tags.map((t) => t.toLowerCase());
+          Object.entries(GROUP).forEach(([g, words]) => { if (words.some((w) => low.includes(w))) i.tags.push(g); }); });
+        const count = {};
+        items.forEach((i) => [...new Set(i.tags)].forEach((t) => { count[t] = (count[t] || 0) + 1; }));
+        const tags = ['All', "Our programmes", "Members' stories", ...Object.keys(GROUP)].filter((t) => t === 'All' || count[t]);
+        const bar = document.getElementById('st-filters');
+        if (bar) {
+          bar.innerHTML = tags.map((t, n) => `<button type="button" class="${n ? '' : 'on'}" aria-pressed="${n ? 'false' : 'true'}" data-t="${esc(t)}">${esc(t)}${t === 'All' ? ` (${items.length})` : ` (${count[t]})`}</button>`).join('');
+          bar.addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return;
+            bar.querySelectorAll('button').forEach((x) => { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b); });
+            draw(b.dataset.t); });
+        }
+        draw('All');
+      }
+    }
+
     // projects
     const lists = document.querySelectorAll('[data-live="projects"]');
     const mapEl = document.getElementById('pj-map');
