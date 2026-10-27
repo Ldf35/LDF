@@ -1163,3 +1163,12 @@ select {
 .mk-site:hover { transform: translateY(-2px); }
 .mk-site img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 12px; margin-bottom: 8px; }
 .mk-free { color: #3d7a12; }
+/* We are all part of it */
+.together { background: linear-gradient(180deg, #ffffff 0%, var(--pale) 100%); }
+.together-live .stat { background: #fff; border: 1px solid var(--line); color: var(--purple); box-shadow: var(--shadow); }
+.together-live .stat span { color: var(--muted); }
+.together-live .muted, .together-note { color: var(--muted); grid-column: 1 / -1; }
+.together-live { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.together-live .stat { flex: 1 1 140px; max-width: 220px; padding: 14px 10px; }
+.together-live .stat b { font-size: clamp(26px, 4vw, 40px); }
+.together-live .muted { flex-basis: 100%; }

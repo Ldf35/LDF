@@ -92,6 +92,19 @@
       }).catch(() => stats.forEach((el) => { el.innerHTML = ''; }));
     }
 
+    // We did this together: LDF-wide totals (the same numbers members see on their "My part" page)
+    const togetherEls = document.querySelectorAll('[data-live="together"]');
+    if (togetherEls.length) {
+      rpc('ldf_together').then((d) => {
+        const rows = [['members', 'People in the LDF family'], ['families', 'Families who got food'], ['certificates', 'Certificates earned'], ['hours', 'Volunteer hours'], ['free_items', 'Free items given']]
+          .filter(([k]) => Number(d && d[k]) > 0);
+        togetherEls.forEach((el) => {
+          el.innerHTML = rows.map(([k, l]) => `<div class="stat"><b>${Number(d[k]).toLocaleString('en-GB')}</b><span>${l}</span></div>`).join('')
+            + (rows.length < 3 ? '<p class="muted">We are just starting. The first village batch is on its way, and every number here will grow with each person who joins.</p>' : '');
+        });
+      }).catch(() => togetherEls.forEach((el) => { el.innerHTML = ''; }));
+    }
+
     // LDF Market: newest live items (sale and free); clicking opens the item in the app
     document.querySelectorAll('[data-live="market"]').forEach((el) => {
       rpc('market_browse', { p_kind: null, p_category: null, p_district: null, p_q: null, p_limit: Number(el.dataset.limit || 6), p_offset: 0 }).then((items) => {
