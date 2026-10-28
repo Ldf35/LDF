@@ -105,6 +105,14 @@
       }).catch(() => togetherEls.forEach((el) => { el.innerHTML = ''; }));
     }
 
+    // LDF Star of the month (first name and one line; only members who agreed to be shown)
+    document.querySelectorAll('[data-live="star"]').forEach((el) => {
+      rpc('public_star').then((s) => {
+        if (!s || !s.name) { el.hidden = true; return; }
+        el.innerHTML = `<div class="star-month"><span class="star-i" aria-hidden="true">🌟</span><div><p class="eyebrow">LDF Star of the month</p><h3>${esc(s.name)}</h3><p>${esc(s.note)}</p></div></div>`;
+      }).catch(() => { el.hidden = true; });
+    });
+
     // LDF Market: newest live items (sale and free); clicking opens the item in the app
     document.querySelectorAll('[data-live="market"]').forEach((el) => {
       rpc('market_browse', { p_kind: null, p_category: null, p_district: null, p_q: null, p_limit: Number(el.dataset.limit || 6), p_offset: 0 }).then((items) => {
