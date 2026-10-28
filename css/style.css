@@ -1197,3 +1197,6 @@ select {
 @media (min-width: 781px) { .primary-nav .nav-home { display: none; } }
 @media (max-width: 780px) { .nav-more { display: none; } .primary-nav .nav-mobile-only { display: block; } }
 @media (min-width: 781px) and (max-width: 1000px) { .primary-nav .nav-cta { display: none; } .brand small { display: none; } .primary-nav { gap: 10px; } }
+.star-wrap { max-width: 620px; margin: 22px auto 0; }
+.star-month { display: flex; gap: 16px; align-items: center; background: linear-gradient(135deg, #fff8e1, #fff); border: 2px solid #f5d77a; border-radius: 18px; padding: 16px 20px; box-shadow: var(--shadow); }
+.star-month .star-i { font-size: 2.6em; } .star-month .eyebrow { margin: 0 0 2px; color: #a06b00; } .star-month h3 { margin: 0 0 4px; color: var(--blue); } .star-month p { margin: 0; }
