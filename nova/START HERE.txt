@@ -1,0 +1,62 @@
+NOVA - your AI team for Life Development Foundation
+====================================================
+Nova runs on THIS laptop. Keep this folder private: never upload it to GitHub,
+Vercel or anywhere public (config.json holds your keys).
+
+ONE-TIME SETUP
+1. Install Python 3.12 or 3.13 from python.org  (tick "Add python.exe to PATH")
+   and Ollama from ollama.com  (you have both already).
+2. Double-click  "1 - SETUP (run once).bat"  and wait until it says Done.
+3. Open  config.json  in Notepad and fill in:
+     your_name          your name
+     supabase_key       Supabase -> Project Settings -> API -> service_role key
+     your_ldf_user_id   Supabase -> Authentication -> Users -> your row -> User UID
+     website_url        your website address (e.g. https://ldf.lk)
+   Optional: github_token, vercel_token, vercel_project, vercel_deploy_hook,
+             owner_pin (4 digits), phone_access true + phone_pin (6+ digits).
+   Already filled in for you: LDF details, Supabase address, email via your app,
+   logo, currency LKR.
+
+EVERY DAY
+  "2 - START NOVA.bat"                 type or press Enter to speak; dashboard opens
+  "3 - TALK TO NOVA (Hey Nova).bat"    hands-free: say "Hey LDF" (or "Hey Nova")
+  "4 - RUN NOVA IN BACKGROUND.bat"     all agents work quietly; dashboard only
+  "5 - START NOVA WITH WINDOWS.bat"    run once: Nova starts by itself at login
+  "6 - MINI NOVA ON MY SCREEN.bat"     3D LDF walks and flies on your screen (click it to ask)
+  "STOP NOVA.bat"                      stops the background work and LDF on your screen
+
+DASHBOARD:  http://127.0.0.1:8765      NOVA'S FACE:  http://127.0.0.1:8765/face
+Put true stories in  my_work\stories  and documents in  my_work.
+
+THINGS TO SAY
+  "What needs me today?"          "Is the system healthy?"
+  "Is everything OK with Hope?"   "Plan the next Hope batch"
+  "Which students need a nudge?"  "Make a course on confidence for young adults"
+  "Save this story: ..."          "Who fits our open opportunities?"
+  "Plan next week's posts"        "Which donors should I thank?"
+  "Switch to student mode"        "LDF, high five!"
+
+LDF'S NATURAL VOICE AND FEELINGS
+  LDF now speaks with a natural human-like voice (it downloads once, about 60 MB, the
+  first time it talks). The mouth moves with the real voice, on the laptop and the phone.
+  LDF also picks its own mood and move for each answer (happy, concerned, thinking...
+  wave, thumbs up, celebrate...). Sinhala and Tamil replies still use the Windows voice.
+  If the voice sounds wrong:  add  "voice_engine": "windows"  to config.json.
+  Another voice:  "piper_voice": "en_US-amy-medium"  (any name from rhasspy/piper-voices).
+
+LDF'S SIZE: right-click LDF on your screen -> LDF's size -> Small / Medium / Big / Huge.
+  (or put  "pet_size": 150  in config.json; 100 is normal)
+
+FINANCE AGENT (read-only: it never pays or moves money)
+  "How is our money?"  "What does LDF owe?"  "Check the money for problems"
+  Dashboard -> Finance: money in, LDF's own share, money out, what LDF owes, gifts to match, batch money.
+
+LDF IN 3D starts by itself. It shows your agents at work: glowing task orbs when the
+Brain hands out a job, the agent's result in a bubble, and what's next for you.
+Click it to ask, drag it, right-click for more. Keep these next to my_agent.py:
+the "ldf_frames" folder, three.min.js and ldf3d.js (they make LDF 3D).
+To turn that off: "mini_nova_on_start": false in config.json.
+
+Full instructions for every agent are at the top of my_agent.py.
+
+BACK UP once a week: config.json, memory.json, buddy_data.json, my_work, courses.

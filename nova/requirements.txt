@@ -1,0 +1,12 @@
+requests
+numpy
+faster-whisper
+sounddevice
+pyttsx3
+pypdf
+python-docx
+plyer
+pillow
+imageio-ffmpeg
+vosk
+piper-tts
