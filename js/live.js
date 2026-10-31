@@ -39,6 +39,7 @@
     return `<article class="card pj-card"><div class="pj-top"><span class="status ${esc(p.status)}">${STATUS[p.status] || ''}</span><span class="kind">${KINDS[p.kind] || 'Project'}</span></div>
       ${p.photos && p.photos.length ? `<div class="pj-photos">${p.photos.slice(0, 3).map((x) => `<img src="${esc(photoUrl(x))}" alt="${esc(p.title)}" loading="lazy">`).join('')}</div>` : ''}
       <h3>${esc(p.title)}</h3>
+      ${p.org && p.org_id ? `<p class="small pj-by">With <a href="${esc(cfg.appUrl || 'https://ldf-platform.vercel.app/')}#/partner/${esc(p.org_id)}" target="_blank" rel="noopener noreferrer">${esc(p.org)}</a></p>` : ''}
       <p class="where">${esc([p.place, p.district && p.district !== p.place ? p.district : ''].filter(Boolean).join(', '))}${when ? ' · ' + esc(when) : ''}${p.participants ? ' · ' + Number(p.participants) + ' people' : ''}</p>
       ${p.about ? `<p>${esc(p.about)}</p>` : ''}
       ${p.audience ? `<p class="small"><b>For:</b> ${esc(p.audience)}</p>` : ''}
@@ -286,6 +287,18 @@
         }
         draw('All');
       }
+    }
+
+    // partner organisations (each has a public page in the app)
+    const partnerEls = document.querySelectorAll('[data-live="partners"]');
+    if (partnerEls.length) {
+      rpc('public_partner_list').then((rows) => {
+        const app = cfg.appUrl || 'https://ldf-platform.vercel.app/';
+        const html = (rows || []).map((o) => `<a class="card partner-card" href="${esc(app)}#/partner/${esc(o.id)}" target="_blank" rel="noopener noreferrer">
+          ${o.logo ? `<img src="${esc(photoUrl(o.logo))}" alt="" width="56" height="56" loading="lazy">` : `<span class="partner-mark" aria-hidden="true">${esc(String(o.name).trim().charAt(0).toUpperCase())}</span>`}
+          <span><b>${esc(o.name)}</b><small>${[o.district, Number(o.roles) ? `${Number(o.roles)} open ${Number(o.roles) === 1 ? 'role' : 'roles'}` : '', Number(o.projects) ? `${Number(o.projects)} ${Number(o.projects) === 1 ? 'project' : 'projects'}` : ''].filter(Boolean).map(esc).join(' · ') || 'LDF partner'}</small></span></a>`).join('');
+        partnerEls.forEach((el) => { el.innerHTML = html || '<p class="muted">Checked partner organisations will appear here. Yours could be the first.</p>'; });
+      }).catch(() => partnerEls.forEach((el) => { el.innerHTML = ''; }));
     }
 
     // projects
