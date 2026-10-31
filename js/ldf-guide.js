@@ -17,7 +17,7 @@
     'Because someone once taught us too': ['Every Coach shares free courses, because we never want money to stop anyone from learning.', 'love', '#2fc3d4'],
     'Give what you can, find what you need.': ['LDF Market! Buy from local shops, or give things you no longer need. Our district team checks every free item.', 'celebrate', '#f59e0b'],
     'New in LDF Market': ['These items are live in the app right now. Tap one to see it.', 'point', '#f59e0b'],
-    'Sell with LDF': ['Shops can join for free. LDF takes 10% of each sale, once a month.', 'handshake', '#f59e0b'],
+    'Sell with LDF': ['Shops join free with up to 10 items, or take the monthly Shop plan for unlimited items. No percentage on sales.', 'handshake', '#f59e0b'],
     'Batches we are finishing together': ['Each batch needs the food from donors and the programme day from sponsors. Tap one to help finish it!', 'celebrate', '#8cae26'],
     'Who finishes a Hope batch?': ['Donors, sponsors, shops and volunteers. LDF is only the platform; you do the work together.', 'love', '#a78bfa'],
     'Far from home, still part of it.': ['Living abroad? You can still help your home village. Choose your currency to see what your gift does!', 'wave', '#2453d6'],
