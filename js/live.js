@@ -126,7 +126,7 @@
           <h3>${esc(i.title)}</h3><p>${price(i)}</p>
           <p class="where">${i.kind === 'free' ? 'Given by an LDF member, checked by the district team' : esc(i.shop || '') + (i.certified ? ' ✔' : '')}</p></a>`).join('')
           : `<article class="card"><h3>The first shops are joining now</h3><p>Be one of the first to give a free item or bring your shop to LDF Market.</p><a class="button button-secondary" href="${esc(app)}#/market/give" target="_blank" rel="noopener noreferrer">Give a free item</a></article>
-             <article class="card"><h3>Shops: sell with LDF</h3><p>Free to join. You deliver, the buyer pays you, and LDF takes 10% once a month.</p><a class="button button-secondary" href="market.html#sell">How it works</a></article>
+             <article class="card"><h3>Shops: sell with LDF</h3><p>Free to join with up to 10 items, and no percentage on sales. The Shop plan gives unlimited items.</p><a class="button button-secondary" href="market.html#sell">How it works</a></article>
              <article class="card"><h3>Checked by people you know</h3><p>Your district team checks every free item before it appears, so it is clean, safe and useful.</p><a class="button button-secondary" href="market.html">Learn more</a></article>`;
       }).catch(() => { el.innerHTML = ''; });
     });
