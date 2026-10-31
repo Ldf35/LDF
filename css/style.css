@@ -1200,3 +1200,8 @@ select {
 .star-wrap { max-width: 620px; margin: 22px auto 0; }
 .star-month { display: flex; gap: 16px; align-items: center; background: linear-gradient(135deg, #fff8e1, #fff); border: 2px solid #f5d77a; border-radius: 18px; padding: 16px 20px; box-shadow: var(--shadow); }
 .star-month .star-i { font-size: 2.6em; } .star-month .eyebrow { margin: 0 0 2px; color: #a06b00; } .star-month h3 { margin: 0 0 4px; color: var(--blue); } .star-month p { margin: 0; }
+/* Do good together */
+.dg-grid { margin-top: 8px; }
+.dg { position: relative; padding-top: 26px; } .dg-i { font-size: 2em; display: block; margin-bottom: 6px; }
+.dg h3 { margin-top: 0; } .dg .button { margin-top: 10px; align-self: flex-start; }
+.dg-levels { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 6px; }
