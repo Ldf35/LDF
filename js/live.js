@@ -106,6 +106,34 @@
       }).catch(() => togetherEls.forEach((el) => { el.innerHTML = ''; }));
     }
 
+    // Open Finance: this year's money in and out (totals only; the app's open_finance never names anyone)
+    document.querySelectorAll('[data-live="openfinance"]').forEach((el) => {
+      rpc('open_finance').then((f) => {
+        const cur = (f && f.currency) || 'LKR', n = (v) => Number(v || 0).toLocaleString('en-GB');
+        const any = Number(f && f.money_in) > 0 || Number(f && f.money_out) > 0;
+        el.innerHTML = any
+          ? `<div class="of-n"><b>${esc(cur)} ${n(f.money_in)}</b><span>came in during ${esc(f.year)}</span></div>
+             <div class="of-n"><b>${esc(cur)} ${n(f.money_out)}</b><span>went out to families, programmes and running LDF</span></div>
+             <div class="of-n"><b>${n(f.gifts)}</b><span>gifts</span></div>`
+          : `<p class="muted">LDF's open accounts start with the first gift this year. From then on, every rupee in and every rupee out appears here, updated live.</p>`;
+      }).catch(() => { el.innerHTML = ''; });
+    });
+
+    // Where LDF is: every country, open or getting ready, with its languages (from rollout_public)
+    document.querySelectorAll('[data-live="countries"]').forEach((el) => {
+      const LANG = { en: 'English', si: 'සිංහල', ta: 'தமிழ்', fr: 'Français', ar: 'العربية', it: 'Italiano' };
+      rpc('rollout_public').then((d) => {
+        const list = ((d && d.countries) || []).slice().sort((a, b) => (b.active - a.active) || String(a.name).localeCompare(String(b.name)));
+        if (!list.length) { el.innerHTML = ''; return; }
+        el.innerHTML = list.map((c) => {
+          const open = (c.open_districts || []).map((x) => x.name);
+          return `<article class="country ${c.active ? 'on' : ''}"><span class="flag" aria-hidden="true">${c.active ? '✅' : '🌱'}</span>
+            <div><h3>${esc(c.name)}</h3><p class="cstat">${c.active ? `Open now${open.length ? ': ' + esc(open.slice(0, 3).join(', ')) + (open.length > 3 ? ' and more' : '') : ''}` : 'Getting ready'}</p>
+            <p class="small">${(c.languages || []).map((l) => esc(LANG[l] || l)).join(' · ')}</p></div></article>`;
+        }).join('');
+      }).catch(() => { el.innerHTML = ''; });
+    });
+
     // LDF Star of the month (first name and one line; only members who agreed to be shown)
     document.querySelectorAll('[data-live="star"]').forEach((el) => {
       rpc('public_star').then((s) => {

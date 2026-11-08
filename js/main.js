@@ -152,6 +152,7 @@
 
           <div>
             <h2>Information</h2>
+            <a href="${APP}#/open" target="_blank" rel="noopener noreferrer">Open Finance</a>
             <a href="${APP}#/policies/privacy" target="_blank" rel="noopener noreferrer">Privacy policy</a>
             <a href="${APP}#/policies/terms" target="_blank" rel="noopener noreferrer">Terms of use</a>
             <a href="${APP}#/policies/safeguarding" target="_blank" rel="noopener noreferrer">Child safeguarding</a>
