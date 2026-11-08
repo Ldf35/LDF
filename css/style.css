@@ -1217,3 +1217,24 @@ select {
 .partner-card span { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .partner-card small { color: #6b6280; }
 .pj-by { margin: -4px 0 6px; }
+
+/* What is new (Nov 2026): new cards, Open Finance strip, countries */
+.new-card { border-top: 4px solid var(--nc, #7b2a8e); }
+.new-i { font-size: 30px; display: block; margin-bottom: 6px; }
+.of-strip { margin-top: 28px; display: grid; grid-template-columns: minmax(180px, 1fr) 2.4fr; gap: 18px; align-items: center; padding: 22px; border-radius: 20px; background: linear-gradient(135deg, #f6eefb, #eef6ff); }
+.of-strip h3 { margin: 0; }
+.of-live { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.of-n { background: #fff; border-radius: 14px; padding: 12px 14px; }
+.of-n b { display: block; font-size: 22px; color: var(--purple, #4b1d7a); }
+.of-n span { font-size: 14px; color: #555; }
+.of-live .muted { margin: 0; }
+.countries { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.country { display: flex; gap: 12px; align-items: flex-start; background: #fff; border: 1px solid #ece4f3; border-radius: 16px; padding: 14px 16px; }
+.country .flag { font-size: 30px; line-height: 1; }
+.country h3 { margin: 0 0 2px; font-size: 18px; }
+.country .cstat { margin: 0; font-weight: 600; color: #8a6d00; }
+.country.on { border-color: #8cae26; background: #f6fbea; }
+.country.on .cstat { color: #4d6b00; }
+.country .small { margin: 4px 0 0; }
+@media (max-width: 760px) { .of-strip { grid-template-columns: 1fr; } }
+.of-strip > .button { grid-column: 1 / -1; justify-self: start; }
