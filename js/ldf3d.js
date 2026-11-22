@@ -1,4 +1,4 @@
-/* LDF in 3D: built from the Life Development Foundation logo.
+/* Manavea in 3D: built from the Manavea logo.
    Green circle = head, white crescent = suit + badge, purple and cyan figures = left and right sleeves + boots.
    Needs three.js (r128). Usage:
      const bot = LDF3D.create(canvas, {shadow:true});
@@ -228,7 +228,7 @@
     R.legs.forEach((h, i) => { h.rotation.x = -p.legs[i] * D; });
     if (R.knees && p.knees) R.knees.forEach((k, i) => { k.rotation.x = p.knees[i] * D; });
     if (R.torso) R.torso.scale.set(1 + (p.breath || 0) * .008, 1 + (p.breath || 0) * .014, 1 + (p.breath || 0) * .008);
-    // springy antenna: it lags behind when LDF moves, then wobbles back
+    // springy antenna: it lags behind when Manavea moves, then wobbles back
     if (R.spring) { const S = R.spring, push = (p.y - S.py) * 9 + (p.tilt - S.pt) * 3 + (p.turn || 0) * .4;
       S.py = p.y; S.pt = p.tilt; S.v += (-push * .35 - S.a) * .18; S.v *= .82; S.a += S.v; S.a = Math.max(-.6, Math.min(.6, S.a));
       R.ant.rotation.z = S.a * .9; R.ant.rotation.x = S.a * .35; }
