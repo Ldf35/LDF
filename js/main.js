@@ -11,12 +11,12 @@
     ['about.html', 'About us'],
     ['projects.html', 'What we do'],
     ['hope.html', 'Hope for Families'],
-    ['market.html', 'LDF Market'],
+    ['market.html', 'Manavea Market'],
     ['abroad.html', 'From abroad'],
     ['learning.html', 'Learning Hub'],
     ['tutors.html', 'Tutors'],
     ['stories.html', 'Stories'],
-    ['app.html', 'LDF App'],
+    ['app.html', 'Manavea App'],
     ['index.html#join', 'Join us'],
     ['contact.html', 'Contact']
   ];
@@ -24,7 +24,7 @@
   // on wide screens these sit under "More" so the menu fits on one line
   const MORE = new Set(['market.html', 'abroad.html', 'tutors.html', 'app.html']);
 
-  const APP = config.appUrl || 'https://ldf-platform.vercel.app/';
+  const APP = config.appUrl || 'https://manavea-platform.vercel.app/';
 
   const link = (href, label, cls = '') =>
     `<a class="${cls}" href="${href}"${
@@ -42,14 +42,14 @@
         <div class="container nav-wrap">
 
           <a class="brand" href="index.html"
-             aria-label="Life Development Foundation home">
+             aria-label="Manavea home">
             <img
-              src="assets/7e64c73a-b2e1-4843-b294-a0825088490c.jpeg"
-              alt="LDF logo"
+              src="assets/manavea-logo.png"
+              alt="Manavea logo"
             >
             <span>
-              <strong>LDF</strong>
-              <small>Life Development Foundation</small>
+              <strong>Manavea</strong>
+              <small>One connected world</small>
             </span>
           </a>
 
@@ -116,12 +116,12 @@
           <div>
             <a class="brand brand-footer" href="index.html">
               <img
-                src="assets/7e64c73a-b2e1-4843-b294-a0825088490c.jpeg"
-                alt="LDF logo"
+                src="assets/manavea-logo.png"
+                alt="Manavea logo"
               >
               <span>
-                <strong>LDF</strong>
-                <small>Life Development Foundation</small>
+                <strong>Manavea</strong>
+                <small>One connected world</small>
               </span>
             </a>
 
@@ -139,14 +139,14 @@
             ${link('tutors.html', 'Tutors')}
             ${link('stories.html', 'Real stories')}
             ${link('gallery.html', 'Photo gallery')}
-            ${link('app.html', 'The LDF app')}
+            ${link('app.html', 'The Manavea app')}
           </div>
 
           <div>
             <h2>Join in</h2>
             ${link('index.html#join', 'Join our team')}
             <a href="${APP}#/join" target="_blank" rel="noopener noreferrer">Volunteer or partner</a>
-            <a href="${APP}#/give" target="_blank" rel="noopener noreferrer">Give through LDF Hope</a>
+            <a href="${APP}#/give" target="_blank" rel="noopener noreferrer">Give through Manavea Hope</a>
             ${link('contact.html', 'Contact us')}
           </div>
 
@@ -156,7 +156,7 @@
             <a href="${APP}#/policies/privacy" target="_blank" rel="noopener noreferrer">Privacy policy</a>
             <a href="${APP}#/policies/terms" target="_blank" rel="noopener noreferrer">Terms of use</a>
             <a href="${APP}#/policies/safeguarding" target="_blank" rel="noopener noreferrer">Child safeguarding</a>
-            <a data-email href="#">Email LDF</a>
+            <a data-email href="#">Email Manavea</a>
             <div class="foot-socials" id="foot-socials"></div>
           </div>
 
@@ -164,7 +164,7 @@
 
         <div class="container footer-bottom">
           <span>
-            © <span id="year"></span> Life Development Foundation
+            © <span id="year"></span> Manavea
           </span>
           <span>People first. Progress with purpose.</span>
         </div>
@@ -204,7 +204,7 @@
       anchor.textContent =
         key === 'learning'
           ? 'Ask about Learning Hub'
-          : 'Contact LDF about this service';
+          : 'Contact Manavea about this service';
     }
   });
 
@@ -238,7 +238,7 @@
       const data = new FormData(form);
 
       const subject =
-        `LDF website enquiry — ${data.get('topic') || 'General'}`;
+        `Manavea website enquiry — ${data.get('topic') || 'General'}`;
 
       const body = [
         `Name: ${data.get('name') || ''}`,
@@ -262,7 +262,7 @@
     });
   }
 
-  // LDF, the 3D guide (loads itself after the page is ready)
+  // Manavea, the 3D guide (loads itself after the page is ready)
   const guide = document.createElement('script');
   guide.src = 'js/ldf-guide.js';
   guide.defer = true;

@@ -1,6 +1,6 @@
 
 /* =========================================================
-   LIFE DEVELOPMENT FOUNDATION (LDF)
+   LIFE DEVELOPMENT FOUNDATION (Manavea)
    Main Website Stylesheet
    Theme: Royal Blue, White and Clean Community Design
    ========================================================= */
@@ -1003,7 +1003,7 @@ select {
 
 
 /* =========================================================
-   LDF APP-CONNECTED REDESIGN
+   Manavea APP-CONNECTED REDESIGN
    ========================================================= */
 .nav-signin { font-weight: 700; color: var(--blue) !important; padding: 8px 12px; text-decoration: none; }
 .nav-cta { background: linear-gradient(135deg, var(--purple), var(--accent)) !important; color: #fff !important; border: 0 !important; }
@@ -1120,7 +1120,7 @@ select {
 
 
 /* =========================================================
-   LDF IN 3D: the guide, the main idea and the AI team
+   Manavea IN 3D: the guide, the main idea and the AI team
    ========================================================= */
 
 .ldfg { position: fixed; left: 0; top: 0; z-index: 60; pointer-events: none; will-change: transform; }
@@ -1158,7 +1158,7 @@ select {
 .join-card .join-dot { width: 34px; height: 34px; border-radius: 50%; background: var(--jc); box-shadow: 0 0 0 6px color-mix(in srgb, var(--jc) 18%, transparent); }
 .join-card .button { margin-top: auto; align-self: flex-start; }
 
-/* LDF Market cards on the website */
+/* Manavea Market cards on the website */
 .mk-site { display: block; text-decoration: none; color: inherit; transition: transform .15s; }
 .mk-site:hover { transform: translateY(-2px); }
 .mk-site img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 12px; margin-bottom: 8px; }

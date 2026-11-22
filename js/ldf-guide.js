@@ -1,36 +1,36 @@
-// LDF, the 3D guide of the website. When you reach a section it flies to its heading (on wide screens) or
+// Manavea, the 3D guide of the website. When you reach a section it flies to its heading (on wide screens) or
 // to the corner (on phones) and explains it; then it wanders around: walking along the bottom of the
 // screen, waving, thinking, and flying up into the empty side space. Tap it to hear about the part you
 // are on. The 3D files load only after the page is ready, and are skipped for visitors who save data,
 // prefer less motion, or whose browser has no 3D.
 (() => {
   'use strict';
-  const APP = (window.LDF_CONFIG && window.LDF_CONFIG.appUrl) || 'https://ldf-platform.vercel.app/';
+  const APP = (window.LDF_CONFIG && window.LDF_CONFIG.appUrl) || 'https://manavea-platform.vercel.app/';
 
-  // What LDF says for each section, by its heading. [words, move, colour]
+  // What Manavea says for each section, by its heading. [words, move, colour]
   const SAY = {
-    'Building stronger lives. Creating thriving communities.': ['Ayubowan! I’m LDF, the AI helper of Life Development Foundation. Scroll down and I’ll show you around.', 'wave', '#8b5cf6'],
+    'Building stronger lives. Creating thriving communities.': ['Ayubowan! I’m the Manavea helper. Scroll down and I’ll show you around.', 'wave', '#8b5cf6'],
     'Our idea': ['Our idea in four points. Every person has value, and help always comes with dignity.', 'love', '#a78bfa'],
     'Progress Begins with People.': ['Everything we do starts with people: support for families, learning, and taking part in the community.', 'talk', '#22c3dd'],
-    'There is a place for you at LDF.': ['Join us! Be a Coach, a counsellor, a volunteer, a workshop host, a partner, or part of our team.', 'celebrate', '#ec4899'],
+    'There is a place for you at Manavea.': ['Join us! Be a Coach, a counsellor, a volunteer, a workshop host, a partner, or part of our team.', 'celebrate', '#ec4899'],
     'Nobody should have to choose between dinner and learning.': ['This is why we do it this way: there is always a free way to learn, everyone gives what they can, and the people who help are treated fairly.', 'love', '#a78bfa'],
     'Because someone once taught us too': ['Every Coach shares free courses, because we never want money to stop anyone from learning.', 'love', '#2fc3d4'],
-    'Give what you can, find what you need.': ['LDF Market! Buy from local shops, or give things you no longer need. Our district team checks every free item.', 'celebrate', '#f59e0b'],
-    'New in LDF Market': ['These items are live in the app right now. Tap one to see it.', 'point', '#f59e0b'],
-    'Sell with LDF': ['Shops join free with up to 10 items, or take the monthly Shop plan for unlimited items. No percentage on sales.', 'handshake', '#f59e0b'],
+    'Give what you can, find what you need.': ['Manavea Market! Buy from local shops, or give things you no longer need. Our district team checks every free item.', 'celebrate', '#f59e0b'],
+    'New in Manavea Market': ['These items are live in the app right now. Tap one to see it.', 'point', '#f59e0b'],
+    'Sell with Manavea': ['Shops join free with up to 10 items, or take the monthly Shop plan for unlimited items. No percentage on sales.', 'handshake', '#f59e0b'],
     'Batches we are finishing together': ['Each batch needs the food from donors and the programme day from sponsors. Tap one to help finish it!', 'celebrate', '#8cae26'],
-    'Who finishes a Hope batch?': ['Donors, sponsors, shops and volunteers. LDF is only the platform; you do the work together.', 'love', '#a78bfa'],
+    'Who finishes a Hope batch?': ['Donors, sponsors, shops and volunteers. Manavea is only the platform; you do the work together.', 'love', '#a78bfa'],
     'Far from home, still part of it.': ['Living abroad? You can still help your home village. Choose your currency to see what your gift does!', 'wave', '#2453d6'],
-    'Help home from anywhere in the world': ['Welcome! Here is how Sri Lankans abroad help their home villages through LDF.', 'wave', '#2453d6'],
+    'Help home from anywhere in the world': ['Welcome! Here is how Sri Lankans abroad help their home villages through Manavea.', 'wave', '#2453d6'],
     'Stories from our work': ['Every story here is true. Tap a topic to filter them. Members choose whether their name is shown.', 'love', '#ec4899'],
-    'Partner with LDF': ['Companies can sponsor a programme day, free tutoring, Hope packages or courses. Every rupee is tracked openly in the app.', 'handshake', '#f59e0b'],
+    'Partner with Manavea': ['Companies can sponsor a programme day, free tutoring, Hope packages or courses. Every rupee is tracked openly in the app.', 'handshake', '#f59e0b'],
     'Sponsor a programme day': ['A day sponsor pays for the team who deliver: travel, meals and fair pay. Up to 3 sponsors can share one day.', 'handshake', '#f59e0b'],
-    'Our supporters': ['These are the companies, shops and people who stand with LDF. Thank you!', 'celebrate', '#ec4899'],
+    'Our supporters': ['These are the companies, shops and people who stand with Manavea. Thank you!', 'celebrate', '#ec4899'],
     'Five Connected Areas of Development': ['We focus on five areas: child protection, families, careers, studies, and mental health.', 'point', '#f59e0b'],
-    'What LDF has done, and what comes next.': ['Here are our real projects, shown honestly as completed, running or planned.', 'thumbs', '#84cc16'],
+    'What Manavea has done, and what comes next.': ['Here are our real projects, shown honestly as completed, running or planned.', 'thumbs', '#84cc16'],
     'Workshops you can join, or host.': ['Join a workshop, or host your own! Every workshop keeps free places for people who cannot pay.', 'celebrate', '#22c3dd'],
     'Stuck with a problem? Find your way forward.': ['Stuck? Pathfinder explores many paths with you and shows the ones that fit. It is private, and a real counsellor is there if you need one.', 'think', '#2453d6'],
-    'Everything LDF does, in one app.': ['Give, learn, find a tutor and join in, all in one app. Tap me any time to open it.', 'point', '#2453d6'],
+    'Everything Manavea does, in one app.': ['Give, learn, find a tutor and join in, all in one app. Tap me any time to open it.', 'point', '#2453d6'],
     'Positive Change Is Something We Build Together.': ['Want to help? Share your skills or start a conversation with us. We’d love to hear from you.', 'handshake', '#f59e0b'],
     'Who we are': ['This is who we are: a community in Sri Lanka built on genuine humanity.', 'love', '#a78bfa'],
     'Every person has a genuine side.': ['We believe everyone has something good to give, whatever their religion, politics or past.', 'nod', '#a78bfa'],
@@ -38,24 +38,24 @@
     'How we work': ['And these are the values behind everything we do.', 'thumbs', '#84cc16'],
     'See our projects and get involved': ['Ready to see our projects? Let’s go!', 'celebrate', '#84cc16'],
     'Our projects': ['Here are the programmes we have run, are running, and plan next.', 'wave', '#84cc16'],
-    'Map of programmes and LDF Hope deliveries': ['The map shows towns only, never a family’s address. Purple pins are programmes, green pins are Hope deliveries.', 'point', '#84cc16'],
+    'Map of programmes and Manavea Hope deliveries': ['The map shows towns only, never a family’s address. Purple pins are programmes, green pins are Hope deliveries.', 'point', '#84cc16'],
     'Programmes and activities': ['Every project, shown honestly with its real status.', 'thumbs', '#84cc16'],
     'Moments from our programmes': ['Group photos only, always with consent.', 'love', '#ec4899'],
     'Have an idea for a project?': ['Got an idea? Volunteers can suggest projects in the app.', 'think', '#f59e0b'],
-    'Hope for Families': ['LDF Hope turns kindness into food packages, with dignity, proof and honest updates.', 'love', '#84cc16'],
+    'Hope for Families': ['Manavea Hope turns kindness into food packages, with dignity, proof and honest updates.', 'love', '#84cc16'],
     'From your gift to a family’s table': ['Families are chosen fairly, a local shop packs, volunteers deliver, and photos prove every step.', 'assign', '#84cc16'],
     'Map': ['These are the places Hope has reached. Towns only, never addresses.', 'point', '#84cc16'],
-    'Support LDF as a whole': ['You can also give to LDF in general. It all helps.', 'thumbs', '#84cc16'],
+    'Support Manavea as a whole': ['You can also give to Manavea in general. It all helps.', 'thumbs', '#84cc16'],
     'Be part of the change': ['Give, volunteer, pack parcels, or bring your shop on board!', 'celebrate', '#84cc16'],
     'Learning Hub': ['Welcome to the Learning Hub! Skills for real life, with a certificate.', 'wave', '#22c3dd'],
     'Learn at your own pace': ['Learn when it suits you, with an AI Coach ready to help. Many courses are free.', 'thumbs', '#22c3dd'],
     'Three easy steps': ['Getting started takes three easy steps.', 'point', '#22c3dd'],
     'Knowledge creates opportunities': ['Open the app and begin your first lesson today!', 'celebrate', '#22c3dd'],
-    'Coaches and tutoring': ['Coaches approved by LDF give one-to-one help online, safely.', 'handshake', '#8e3a9f'],
+    'Coaches and tutoring': ['Coaches approved by Manavea give one-to-one help online, safely.', 'handshake', '#8e3a9f'],
     'Stuck on something? Ask a Coach.': ['Every plan includes free tutoring time: 30 minutes, or 60 with Premium.', 'talk', '#8e3a9f'],
     'Meet our Coaches': ['Meet our Coaches. They give tutoring time and can run their own courses.', 'wave', '#8e3a9f'],
     'Safety comes first': ['Safety comes first: sessions are recorded, and under-18s need a guardian.', 'nod', '#ef4444'],
-    'The LDF app': ['This is our app: give, learn, get help and join in.', 'wave', '#2453d6'],
+    'The Manavea app': ['This is our app: give, learn, get help and join in.', 'wave', '#2453d6'],
     'Add it to your home screen': ['Add the app to your phone’s home screen, just like a normal app.', 'point', '#2453d6'],
     'Every moment tells a story.': ['Moments from our programmes. Group photos only, always with consent.', 'love', '#ec4899'],
     'Let’s Start a Conversation': ['Got a question or an idea? We’d love to hear from you.', 'wave', '#8b5cf6'],
@@ -97,7 +97,7 @@
     return a;
   }
   const bottomY = () => innerHeight - H() - 12;
-  // where LDF goes to explain a section: beside its heading on wide screens, otherwise the corner
+  // where Manavea goes to explain a section: beside its heading on wide screens, otherwise the corner
   function explainSpot(a) {
     const w = W(), corner = { x: innerWidth - w - 12, y: bottomY(), side: false };
     if (!a || innerWidth < 1100) return corner;
@@ -169,8 +169,8 @@
     if (lite()) return;
     try { await load3d(); } catch (e) { return; }
     el = document.createElement('div'); el.className = 'ldfg'; el.setAttribute('aria-live', 'polite');
-    el.innerHTML = `<div class="ldfg-say" hidden><b>LDF</b><span></span><p class="ldfg-act"><a href="${APP}" target="_blank" rel="noopener noreferrer">Open the LDF app</a><button type="button" data-hide>Hide</button></p></div>
-      <canvas aria-label="LDF, the AI guide. Tap to hear about this part of the page."></canvas><button type="button" class="ldfg-show" data-show hidden>LDF</button>`;
+    el.innerHTML = `<div class="ldfg-say" hidden><b>Manavea</b><span></span><p class="ldfg-act"><a href="${APP}" target="_blank" rel="noopener noreferrer">Open the Manavea app</a><button type="button" data-hide>Hide</button></p></div>
+      <canvas aria-label="Manavea, the AI guide. Tap to hear about this part of the page."></canvas><button type="button" class="ldfg-show" data-show hidden>Manavea</button>`;
     document.body.appendChild(el);
     sayEl = el.querySelector('.ldfg-say');
     const cv = el.querySelector('canvas');

@@ -1,4 +1,4 @@
-// Live content from the LDF app: impact numbers, projects, map, contact details and the contact form.
+// Live content from the Manavea app: impact numbers, projects, map, contact details and the contact form.
 // Everything here is public information; the app's database decides what visitors may read or send.
 (() => {
   'use strict';
@@ -30,7 +30,7 @@
   const socials = (s) => Object.entries(s || {}).filter(([k, u]) => SOCIAL[k] && safe(u)).map(([k, u]) =>
     `<a class="soc ${k}" href="${esc(u)}" target="_blank" rel="noopener noreferrer" aria-label="${SOCIAL[k][0]}" title="${SOCIAL[k][0]}"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="${SOCIAL[k][1]}"/></svg></a>`).join('');
 
-  const KINDS = { leadership: 'Leadership programme', workshop: 'Workshop', awareness: 'Awareness', school: 'School programme', hope: 'LDF Hope', online: 'Online workshop', other: 'Project' };
+  const KINDS = { leadership: 'Leadership programme', workshop: 'Workshop', awareness: 'Awareness', school: 'School programme', hope: 'Manavea Hope', online: 'Online workshop', other: 'Project' };
   const STATUS = { past: 'Completed', ongoing: 'Running now', planned: 'Planned' };
   const fmtDate = (d) => (d ? new Date(d).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }) : '');
   const photoUrl = (p) => (String(p).startsWith('img/') ? cfg.appUrl + p : `${API.url}/storage/v1/object/public/programmes/${String(p).split('/').map(encodeURIComponent).join('/')}`);
@@ -39,7 +39,7 @@
     return `<article class="card pj-card"><div class="pj-top"><span class="status ${esc(p.status)}">${STATUS[p.status] || ''}</span><span class="kind">${KINDS[p.kind] || 'Project'}</span></div>
       ${p.photos && p.photos.length ? `<div class="pj-photos">${p.photos.slice(0, 3).map((x) => `<img src="${esc(photoUrl(x))}" alt="${esc(p.title)}" loading="lazy">`).join('')}</div>` : ''}
       <h3>${esc(p.title)}</h3>
-      ${p.org && p.org_id ? `<p class="small pj-by">With <a href="${esc(cfg.appUrl || 'https://ldf-platform.vercel.app/')}#/partner/${esc(p.org_id)}" target="_blank" rel="noopener noreferrer">${esc(p.org)}</a></p>` : ''}
+      ${p.org && p.org_id ? `<p class="small pj-by">With <a href="${esc(cfg.appUrl || 'https://manavea-platform.vercel.app/')}#/partner/${esc(p.org_id)}" target="_blank" rel="noopener noreferrer">${esc(p.org)}</a></p>` : ''}
       <p class="where">${esc([p.place, p.district && p.district !== p.place ? p.district : ''].filter(Boolean).join(', '))}${when ? ' · ' + esc(when) : ''}${p.participants ? ' · ' + Number(p.participants) + ' people' : ''}</p>
       ${p.about ? `<p>${esc(p.about)}</p>` : ''}
       ${p.audience ? `<p class="small"><b>For:</b> ${esc(p.audience)}</p>` : ''}
@@ -88,16 +88,16 @@
         const any = rows.some(([k]) => Number(i[k]) > 0);
         stats.forEach((el) => {
           el.innerHTML = any ? rows.map(([k, l]) => `<div class="stat"><b>${Number(i[k] || 0).toLocaleString('en-GB')}</b><span>${l}</span></div>`).join('')
-            : '<p class="muted">Verified delivery numbers appear here as soon as LDF Hope batches are completed and approved.</p>';
+            : '<p class="muted">Verified delivery numbers appear here as soon as Manavea Hope batches are completed and approved.</p>';
         });
       }).catch(() => stats.forEach((el) => { el.innerHTML = ''; }));
     }
 
-    // We did this together: LDF-wide totals (the same numbers members see on their "My part" page)
+    // We did this together: Manavea-wide totals (the same numbers members see on their "My part" page)
     const togetherEls = document.querySelectorAll('[data-live="together"]');
     if (togetherEls.length) {
       rpc('ldf_together').then((d) => {
-        const rows = [['members', 'People in the LDF family'], ['families', 'Families who got food'], ['certificates', 'Certificates earned'], ['hours', 'Volunteer hours'], ['free_items', 'Free items given']]
+        const rows = [['members', 'People in the Manavea family'], ['families', 'Families who got food'], ['certificates', 'Certificates earned'], ['hours', 'Volunteer hours'], ['free_items', 'Free items given']]
           .filter(([k]) => Number(d && d[k]) > 0);
         togetherEls.forEach((el) => {
           el.innerHTML = rows.map(([k, l]) => `<div class="stat"><b>${Number(d[k]).toLocaleString('en-GB')}</b><span>${l}</span></div>`).join('')
@@ -113,13 +113,13 @@
         const any = Number(f && f.money_in) > 0 || Number(f && f.money_out) > 0;
         el.innerHTML = any
           ? `<div class="of-n"><b>${esc(cur)} ${n(f.money_in)}</b><span>came in during ${esc(f.year)}</span></div>
-             <div class="of-n"><b>${esc(cur)} ${n(f.money_out)}</b><span>went out to families, programmes and running LDF</span></div>
+             <div class="of-n"><b>${esc(cur)} ${n(f.money_out)}</b><span>went out to families, programmes and running Manavea</span></div>
              <div class="of-n"><b>${n(f.gifts)}</b><span>gifts</span></div>`
-          : `<p class="muted">LDF's open accounts start with the first gift this year. From then on, every rupee in and every rupee out appears here, updated live.</p>`;
+          : `<p class="muted">Manavea's open accounts start with the first gift this year. From then on, every rupee in and every rupee out appears here, updated live.</p>`;
       }).catch(() => { el.innerHTML = ''; });
     });
 
-    // Where LDF is: every country, open or getting ready, with its languages (from rollout_public)
+    // Where Manavea is: every country, open or getting ready, with its languages (from rollout_public)
     document.querySelectorAll('[data-live="countries"]').forEach((el) => {
       const LANG = { en: 'English', si: 'සිංහල', ta: 'தமிழ்', fr: 'Français', ar: 'العربية', it: 'Italiano' };
       rpc('rollout_public').then((d) => {
@@ -134,32 +134,32 @@
       }).catch(() => { el.innerHTML = ''; });
     });
 
-    // LDF Star of the month (first name and one line; only members who agreed to be shown)
+    // Manavea Star of the month (first name and one line; only members who agreed to be shown)
     document.querySelectorAll('[data-live="star"]').forEach((el) => {
       rpc('public_star').then((s) => {
         if (!s || !s.name) { el.hidden = true; return; }
-        el.innerHTML = `<div class="star-month"><span class="star-i" aria-hidden="true">🌟</span><div><p class="eyebrow">LDF Star of the month</p><h3>${esc(s.name)}</h3><p>${esc(s.note)}</p></div></div>`;
+        el.innerHTML = `<div class="star-month"><span class="star-i" aria-hidden="true">🌟</span><div><p class="eyebrow">Manavea Star of the month</p><h3>${esc(s.name)}</h3><p>${esc(s.note)}</p></div></div>`;
       }).catch(() => { el.hidden = true; });
     });
 
-    // LDF Market: newest live items (sale and free); clicking opens the item in the app
+    // Manavea Market: newest live items (sale and free); clicking opens the item in the app
     document.querySelectorAll('[data-live="market"]').forEach((el) => {
       rpc('market_browse', { p_kind: null, p_category: null, p_district: null, p_q: null, p_limit: Number(el.dataset.limit || 6), p_offset: 0 }).then((items) => {
-        const app = cfg.appUrl || 'https://ldf-platform.vercel.app/';
+        const app = cfg.appUrl || 'https://manavea-platform.vercel.app/';
         const pic = (p) => (p ? `${API.url}/storage/v1/object/public/market/${String(p).split('/').map(encodeURIComponent).join('/')}` : '');
         const price = (i) => (i.kind === 'free' ? '<b class="mk-free">Free</b>' : `<b>Rs ${Number(i.price).toLocaleString('en-GB')}</b>`);
         el.innerHTML = items.length ? items.map((i) => `<a class="card pj-card mk-site" href="${esc(app)}#/market/item/${esc(i.id)}" target="_blank" rel="noopener noreferrer">
           ${i.photo ? `<img src="${esc(pic(i.photo))}" alt="${esc(i.title)}" loading="lazy">` : ''}
           <div class="pj-top"><span class="status ${i.kind === 'free' ? '' : 'ongoing'}">${i.kind === 'free' ? 'Free item' : 'For sale'}</span><span class="kind">${esc(i.district || '')}</span></div>
           <h3>${esc(i.title)}</h3><p>${price(i)}</p>
-          <p class="where">${i.kind === 'free' ? 'Given by an LDF member, checked by the district team' : esc(i.shop || '') + (i.certified ? ' ✔' : '')}</p></a>`).join('')
-          : `<article class="card"><h3>The first shops are joining now</h3><p>Be one of the first to give a free item or bring your shop to LDF Market.</p><a class="button button-secondary" href="${esc(app)}#/market/give" target="_blank" rel="noopener noreferrer">Give a free item</a></article>
-             <article class="card"><h3>Shops: sell with LDF</h3><p>Free to join with up to 10 items, and no percentage on sales. The Shop plan gives unlimited items.</p><a class="button button-secondary" href="market.html#sell">How it works</a></article>
+          <p class="where">${i.kind === 'free' ? 'Given by a Manavea member, checked by the district team' : esc(i.shop || '') + (i.certified ? ' ✔' : '')}</p></a>`).join('')
+          : `<article class="card"><h3>The first shops are joining now</h3><p>Be one of the first to give a free item or bring your shop to Manavea Market.</p><a class="button button-secondary" href="${esc(app)}#/market/give" target="_blank" rel="noopener noreferrer">Give a free item</a></article>
+             <article class="card"><h3>Shops: sell with Manavea</h3><p>Free to join with up to 10 items, and no percentage on sales. The Shop plan gives unlimited items.</p><a class="button button-secondary" href="market.html#sell">How it works</a></article>
              <article class="card"><h3>Checked by people you know</h3><p>Your district team checks every free item before it appears, so it is clean, safe and useful.</p><a class="button button-secondary" href="market.html">Learn more</a></article>`;
       }).catch(() => { el.innerHTML = ''; });
     });
 
-    // Help from abroad: what a gift does, converted into the visitor's currency (an estimate from LDF's latest rates)
+    // Help from abroad: what a gift does, converted into the visitor's currency (an estimate from Manavea's latest rates)
     const abroadEls = document.querySelectorAll('[data-live="abroad"]');
     if (abroadEls.length) {
       Promise.all([rpc('public_rates').catch(() => ({})), rpc('open_batches_public').catch(() => [])]).then(([rates, batches]) => {
@@ -184,18 +184,18 @@
               const nf = Math.max(0, Number(b.target) - Number(b.raised)), nd = Math.max(0, Number(b.day_goal || 0) - Number(b.day_sponsored || 0) - Number(b.day_pledged || 0));
               return `<article class="card"><p class="where">${esc([b.village, b.district].filter(Boolean).join(', '))}</p><h3>${esc(b.title || b.village)}</h3>
                 <p class="small">${nf ? `Food still needs <b>${conv(nf)}</b>` : 'Food ✓'} · ${nd ? `Day still needs <b>${conv(nd)}</b>` : 'Programme day ✓'}</p>
-                <a class="button button-secondary" href="${esc(cfg.appUrl || 'https://ldf-platform.vercel.app/')}#/give/${esc(b.batch_id)}" target="_blank" rel="noopener noreferrer">Help finish it</a></article>`; }).join('')}</div>` : ''}
-            <p class="center small muted">Estimates using LDF’s rate from ${asOf}. Your bank decides the exact amount.</p>`;
+                <a class="button button-secondary" href="${esc(cfg.appUrl || 'https://manavea-platform.vercel.app/')}#/give/${esc(b.batch_id)}" target="_blank" rel="noopener noreferrer">Help finish it</a></article>`; }).join('')}</div>` : ''}
+            <p class="center small muted">Estimates using Manavea’s rate from ${asOf}. Your bank decides the exact amount.</p>`;
           el.querySelector('[data-abroad-cur]').addEventListener('change', (ev) => { cur = ev.target.value; try { localStorage.setItem('ldf.site.cur', cur); } catch (e) { /* private mode */ } abroadEls.forEach(draw); });
         };
         abroadEls.forEach(draw);
       });
     }
 
-    // LDF Hope: open batches with both goals (food from donors, programme day from sponsors)
+    // Manavea Hope: open batches with both goals (food from donors, programme day from sponsors)
     document.querySelectorAll('[data-live="hope-open"]').forEach((el) => {
       rpc('open_batches_public').then((rows) => {
-        const app = cfg.appUrl || 'https://ldf-platform.vercel.app/';
+        const app = cfg.appUrl || 'https://manavea-platform.vercel.app/';
         const rs = (n) => 'Rs ' + Math.round(Number(n || 0)).toLocaleString('en-GB');
         const bar = (a, b, col) => `<div style="height:10px;border-radius:99px;background:#eee6f2;overflow:hidden;margin:4px 0"><span style="display:block;height:100%;width:${b > 0 ? Math.min(100, Math.round((a / b) * 100)) : 0}%;background:${col}"></span></div>`;
         el.innerHTML = rows.length ? rows.slice(0, 6).map((b) => {
@@ -206,9 +206,9 @@
             <p class="small"><b>Programme day${day ? ' ✓' : ''}</b> · ${rs(b.day_sponsored)} of ${rs(b.day_goal)}</p>${bar(Number(b.day_sponsored), Number(b.day_goal), 'linear-gradient(90deg,#f5b301,#ec4899)')}
             <p class="small" style="color:#b0246b;font-weight:600">${need}</p>
             <a class="button button-secondary" href="${esc(app)}#/give/${esc(b.batch_id)}" target="_blank" rel="noopener noreferrer">Help finish it</a></article>`;
-        }).join('') : `<article class="card"><h3>The next batch is being prepared</h3><p>Our district teams are choosing the next village fairly. When it opens, donors and sponsors can finish it together.</p><a class="button button-secondary" href="${esc(app)}#/give" target="_blank" rel="noopener noreferrer">Open LDF Hope</a></article>
+        }).join('') : `<article class="card"><h3>The next batch is being prepared</h3><p>Our district teams are choosing the next village fairly. When it opens, donors and sponsors can finish it together.</p><a class="button button-secondary" href="${esc(app)}#/give" target="_blank" rel="noopener noreferrer">Open Manavea Hope</a></article>
            <article class="card"><h3>Sponsor a programme day</h3><p>Companies can cover the day for the team who deliver. It is the most needed help right now.</p><a class="button button-secondary" href="hope.html#sponsor-a-day">How it works</a></article>
-           <article class="card"><h3>Shops: become a Hope partner</h3><p>Pack food for families at a fair price and show the LDF Hope partner badge in LDF Market.</p><a class="button button-secondary" href="contact.html?topic=HOPE%20shop%20partner#contact-form">Talk to us</a></article>`;
+           <article class="card"><h3>Shops: become a Hope partner</h3><p>Pack food for families at a fair price and show the Manavea Hope partner badge in Manavea Market.</p><a class="button button-secondary" href="contact.html?topic=HOPE%20shop%20partner#contact-form">Talk to us</a></article>`;
       }).catch(() => { el.innerHTML = ''; });
     });
 
@@ -219,9 +219,9 @@
         const items = [];
         ((w && w.day_sponsors) || []).forEach((x) => items.push([x.name, `Sponsored ${Number(x.days)} programme day${Number(x.days) === 1 ? '' : 's'}`]));
         ((sc && sc.partners) || []).forEach((x) => items.push([x.name, 'Partner']));
-        ((sc && sc.donor_orgs) || []).forEach((x) => items.push([x.name, 'Gave to LDF Hope']));
+        ((sc && sc.donor_orgs) || []).forEach((x) => items.push([x.name, 'Gave to Manavea Hope']));
         ((w && w.workshop_orgs) || []).forEach((x) => items.push([x.name, 'Sponsors workshop places']));
-        ((sc && sc.shops) || []).forEach((x) => items.push([x.name, x.certified ? 'LDF Certified Shop' : 'Partner shop']));
+        ((sc && sc.shops) || []).forEach((x) => items.push([x.name, x.certified ? 'Manavea Certified Shop' : 'Partner shop']));
         const seen = new Map();
         items.forEach(([n, what]) => { const k = String(n || '').trim().toLowerCase(); if (!k) return; const o = seen.get(k) || { n, w: [] }; if (!o.w.includes(what)) o.w.push(what); seen.set(k, o); });
         const list = [...seen.values()].slice(0, 24);
@@ -238,7 +238,7 @@
     document.querySelectorAll('[data-live="coaches"]').forEach((el) => {
       rpc('public_coaches').then((cs) => {
         el.innerHTML = cs.length ? cs.map((c) => `<article class="card"><h3>${esc(c.name)}</h3><p class="where">${esc(c.headline || 'Volunteer Coach')}</p>${c.bio ? `<p>${esc(c.bio)}</p>` : ''}<p class="small">${Number(c.sessions || 0)} sessions given</p></article>`).join('')
-          : '<p class="muted">Our Coaches will appear here as they are approved. Want to help? <a href="https://ldf-platform.vercel.app/#/join">Apply to be a Coach</a>.</p>';
+          : '<p class="muted">Our Coaches will appear here as they are approved. Want to help? <a href="https://manavea-platform.vercel.app/#/join">Apply to be a Coach</a>.</p>';
       }).catch(() => { el.innerHTML = ''; });
     });
 
@@ -251,10 +251,10 @@
         const sec = el.closest('[data-wk-section]');
         const list = rows.slice(0, Number(el.dataset.limit || 6));
         if (!list.length) {                                   // nothing scheduled yet: invite people in
-          const app = esc(cfg.appUrl || 'https://ldf-platform.vercel.app/');
+          const app = esc(cfg.appUrl || 'https://manavea-platform.vercel.app/');
           el.innerHTML = [
             ['New workshops are coming', 'Life skills, careers, study skills and wellbeing. Open the app to see them first.', 'workshops', 'See workshops'],
-            ['Share what you know', 'Teachers, professionals and partners can host a workshop. LDF checks every host.', 'workshops/host', 'Host a workshop'],
+            ['Share what you know', 'Teachers, professionals and partners can host a workshop. Manavea checks every host.', 'workshops/host', 'Host a workshop'],
             ['Ask for a topic', 'Tell us what your village, school or group wants to learn and we will try to arrange it.', '', 'Suggest a topic'],
           ].map(([h, p, path, btn]) => `<article class="card"><h3>${h}</h3><p>${p}</p><a class="button button-secondary" href="${path ? app + '#/' + path : 'contact.html?topic=Learning%20Hub#contact-form'}"${path ? ' target="_blank" rel="noopener noreferrer"' : ''}>${btn}</a></article>`).join('');
           if (sec) sec.hidden = false; return; }
@@ -269,7 +269,7 @@
     // stories: programmes that happened + members' published life stories (adults only), with topic filters
     const stEl = document.querySelector('[data-live="stories"]');
     if (stEl) {
-      const app = cfg.appUrl || 'https://ldf-platform.vercel.app/';
+      const app = cfg.appUrl || 'https://manavea-platform.vercel.app/';
       const [progs, lives] = await Promise.all([
         rpc('public_programmes').catch(() => []),
         rpc('stories_list', { p_topic: null, p_limit: 40, p_before: null }).catch(() => []),
@@ -282,7 +282,7 @@
           text: p.about || '', who: p.audience ? 'For: ' + p.audience : '', href: 'projects.html', ext: false, more: 'See the project' })),
         ...(lives || []).map((s) => ({
           tags: ["Members' stories", TOPIC[s.topic] || 'Life'], label: 'Life story', status: 'story',
-          title: s.title, where: s.author ? 'Shared by ' + s.author : 'Shared by an LDF member', text: s.excerpt || '',
+          title: s.title, where: s.author ? 'Shared by ' + s.author : 'Shared by a Manavea member', text: s.excerpt || '',
           who: s.minutes ? s.minutes + ' min read' : '', href: app + '#/story/' + s.id, ext: true, more: 'Read the full story' })),
       ];
       if (!items.length) { stEl.innerHTML = '<p class="muted">Stories will appear here soon.</p>'; }
@@ -321,10 +321,10 @@
     const partnerEls = document.querySelectorAll('[data-live="partners"]');
     if (partnerEls.length) {
       rpc('public_partner_list').then((rows) => {
-        const app = cfg.appUrl || 'https://ldf-platform.vercel.app/';
+        const app = cfg.appUrl || 'https://manavea-platform.vercel.app/';
         const html = (rows || []).map((o) => `<a class="card partner-card" href="${esc(app)}#/partner/${esc(o.id)}" target="_blank" rel="noopener noreferrer">
           ${o.logo ? `<img src="${esc(photoUrl(o.logo))}" alt="" width="56" height="56" loading="lazy">` : `<span class="partner-mark" aria-hidden="true">${esc(String(o.name).trim().charAt(0).toUpperCase())}</span>`}
-          <span><b>${esc(o.name)}</b><small>${[o.district, Number(o.roles) ? `${Number(o.roles)} open ${Number(o.roles) === 1 ? 'role' : 'roles'}` : '', Number(o.projects) ? `${Number(o.projects)} ${Number(o.projects) === 1 ? 'project' : 'projects'}` : ''].filter(Boolean).map(esc).join(' · ') || 'LDF partner'}</small></span></a>`).join('');
+          <span><b>${esc(o.name)}</b><small>${[o.district, Number(o.roles) ? `${Number(o.roles)} open ${Number(o.roles) === 1 ? 'role' : 'roles'}` : '', Number(o.projects) ? `${Number(o.projects)} ${Number(o.projects) === 1 ? 'project' : 'projects'}` : ''].filter(Boolean).map(esc).join(' · ') || 'Manavea partner'}</small></span></a>`).join('');
         partnerEls.forEach((el) => { el.innerHTML = html || '<p class="muted">Checked partner organisations will appear here. Yours could be the first.</p>'; });
       }).catch(() => partnerEls.forEach((el) => { el.innerHTML = ''; }));
     }
@@ -342,7 +342,7 @@
       if (mapEl) drawMap(mapEl, progs, hope);
     }
 
-    // contact form: saves to the LDF inbox; falls back to an e-mail draft if the app cannot be reached
+    // contact form: saves to the Manavea inbox; falls back to an e-mail draft if the app cannot be reached
     document.addEventListener('submit', async (ev) => {
       const form = ev.target.closest('#contact-form');
       if (!form) return;
@@ -355,10 +355,10 @@
       try {
         await rpc('submit_contact', { p_name: String(d.get('name') || '').trim(), p_email: String(d.get('email') || '').trim(), p_topic: topicMap[String(d.get('topic') || '').toLowerCase()] || 'general',
           p_message: String(d.get('message') || '').trim(), p_language: 'en', p_region: null, p_website: String(d.get('website') || '') || null });
-        form.reset(); status.textContent = 'Thank you! Your message has reached the LDF team. We will reply by e-mail.';
+        form.reset(); status.textContent = 'Thank you! Your message has reached the Manavea team. We will reply by e-mail.';
       } catch (e) {
         const body = `Name: ${d.get('name')}\nReply email: ${d.get('email')}\n\n${d.get('message')}`;
-        status.innerHTML = 'We could not send that just now. <a href="mailto:' + esc(cfg.contactEmail) + '?subject=' + encodeURIComponent('LDF Enquiry') + '&body=' + encodeURIComponent(body) + '">Send it by e-mail instead</a>.';
+        status.innerHTML = 'We could not send that just now. <a href="mailto:' + esc(cfg.contactEmail) + '?subject=' + encodeURIComponent('Manavea Enquiry') + '&body=' + encodeURIComponent(body) + '">Send it by e-mail instead</a>.';
       } finally { btn.disabled = false; }
     }, true);
   }

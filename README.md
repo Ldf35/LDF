@@ -1,11 +1,11 @@
-# LDF Website Kit
+# Manavea Website Kit
 
-A responsive, multi-page static website starter for Life Development Foundation, designed for GitHub Pages. It uses HTML, CSS and vanilla JavaScript—no build step or paid dependency is required.
+A responsive, multi-page static website starter for Manavea, designed for GitHub Pages. It uses HTML, CSS and vanilla JavaScript—no build step or paid dependency is required.
 
 ## Files included
 
 - `index.html` — Home
-- `about.html` — About LDF
+- `about.html` — About Manavea
 - `our-work.html` — Focus areas and programmes
 - `hope.html` — HOPE project overview
 - `learning.html` — Learning Hub overview
@@ -18,7 +18,7 @@ A responsive, multi-page static website starter for Life Development Foundation,
 - `css/style.css` — responsive blue-and-white theme
 - `js/main.js` — shared navigation, footer, app links and contact form behaviour
 - `js/config.js` — central settings and app destinations
-- `assets/images/` — editable SVG illustrations and LDF mark
+- `assets/images/` — editable SVG illustrations and Manavea mark
 
 ## Before publishing
 
@@ -50,8 +50,8 @@ A responsive, multi-page static website starter for Life Development Foundation,
 - Proposed future links should be activated only after their destination pages or services exist.
 
 
-## Connected to the LDF app (October 2026 update)
-- The website is the public front door; the app (https://ldf-platform.vercel.app/) does giving, learning, tutoring and volunteering. All "app" buttons point there (`js/config.js`).
+## Connected to the Manavea app (October 2026 update)
+- The website is the public front door; the app (https://manavea-platform.vercel.app/) does giving, learning, tutoring and volunteering. All "app" buttons point there (`js/config.js`).
 - `js/live.js` reads public information from the app: impact numbers, projects and map, e-mail/phone/social links (set by the admin in the app: Admin Station → Automation & settings → Website & contact), and sends the contact form into the app's Inbox.
 - The old Google Apps Script links and the public "Admin" menu were removed. Admin tools are inside the app behind sign-in.
 - Group photos only are published (`assets/gallery`). No close-ups of children.
